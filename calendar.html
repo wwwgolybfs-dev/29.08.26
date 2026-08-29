@@ -12,48 +12,48 @@
 <link href="https://cdn.jsdelivr.net/npm/@fontsource/manrope@5/800.css" rel="stylesheet">
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
-/* ============ PETZKER · Calendar iframe ============ */
+/* ============ PETZKER · Calendar iframe (minimal Apple/Win11 patch) ============ */
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{
-  --gold-grad:linear-gradient(135deg,#f4dd9a 0%,#e0b64f 48%,#bd8f26 100%);
-  --r-lg:24px;--r-md:20px;--r-sm:16px;
+  --gold-grad:linear-gradient(135deg,#eef0f3 0%,#d8dce2 48%,#c3c8d1 100%);
+  --r-lg:20px;--r-md:16px;--r-sm:12px;
   --font:'Manrope',-apple-system,'SF Pro Text',system-ui,sans-serif;
 }
 html[data-theme="light"]{
-  --bg:#f2efe9;--text:#181512;--muted:#7d7669;
-  --stroke:rgba(24,21,18,.09);--stroke-strong:rgba(24,21,18,.18);
-  --surface:rgba(255,255,255,.62);--surface-2:rgba(255,255,255,.45);
-  --hi:rgba(255,255,255,.85);--shadow:0 14px 34px rgba(40,32,18,.10);
-  --gold:#a67c1b;--gold-soft:rgba(166,124,27,.10);--gold-border:rgba(166,124,27,.38);
-  --sheet-bg:rgba(250,248,244,.88);
-  --danger:#c4524a;--ok:#3d8a5f;
-  --day-free-border:rgba(61,138,95,.45);--day-free-bg:rgba(61,138,95,.08);
-  --day-one-border:rgba(196,150,40,.55);--day-one-bg:rgba(196,150,40,.12);
-  --day-full-border:rgba(196,82,74,.55);--day-full-bg:rgba(196,82,74,.12);
+  --bg:#f5f5f7;--text:#1d1d1f;--muted:#6e6e73;
+  --stroke:rgba(0,0,0,.07);--stroke-strong:rgba(0,0,0,.14);
+  --surface:rgba(255,255,255,.72);--surface-2:rgba(255,255,255,.55);
+  --hi:rgba(255,255,255,.9);--shadow:0 10px 28px rgba(0,0,0,.06);
+  --gold:#0a84ff;--gold-soft:rgba(10,132,255,.10);--gold-border:rgba(10,132,255,.28);
+  --sheet-bg:rgba(255,255,255,.92);
+  --danger:#ff3b30;--ok:#34c759;
+  --day-free-border:rgba(52,199,89,.45);--day-free-bg:rgba(52,199,89,.08);
+  --day-one-border:rgba(10,132,255,.45);--day-one-bg:rgba(10,132,255,.08);
+  --day-full-border:rgba(255,59,48,.45);--day-full-bg:rgba(255,59,48,.08);
 }
 html[data-theme="dark"]{
-  --bg:#0b0b0e;--text:#f0ece3;--muted:#9a948a;
-  --stroke:rgba(255,255,255,.08);--stroke-strong:rgba(255,255,255,.2);
-  --surface:rgba(255,255,255,.055);--surface-2:rgba(255,255,255,.035);
-  --hi:rgba(255,255,255,.09);--shadow:0 16px 40px rgba(0,0,0,.45);
-  --gold:#e6bd55;--gold-soft:rgba(230,189,85,.12);--gold-border:rgba(230,189,85,.38);
-  --sheet-bg:rgba(23,23,28,.88);
-  --danger:#e07a70;--ok:#7cc79a;
-  --day-free-border:rgba(124,199,154,.50);--day-free-bg:rgba(124,199,154,.10);
-  --day-one-border:rgba(230,189,85,.55);--day-one-bg:rgba(230,189,85,.14);
-  --day-full-border:rgba(224,122,112,.55);--day-full-bg:rgba(224,122,112,.14);
+  --bg:#000000;--text:#f5f5f7;--muted:#98989d;
+  --stroke:rgba(255,255,255,.08);--stroke-strong:rgba(255,255,255,.16);
+  --surface:rgba(28,28,30,.72);--surface-2:rgba(28,28,30,.5);
+  --hi:rgba(255,255,255,.06);--shadow:0 10px 28px rgba(0,0,0,.5);
+  --gold:#0a84ff;--gold-soft:rgba(10,132,255,.14);--gold-border:rgba(10,132,255,.35);
+  --sheet-bg:rgba(22,22,24,.92);
+  --danger:#ff453a;--ok:#30d158;
+  --day-free-border:rgba(48,209,88,.5);--day-free-bg:rgba(48,209,88,.1);
+  --day-one-border:rgba(10,132,255,.5);--day-one-bg:rgba(10,132,255,.12);
+  --day-full-border:rgba(255,69,58,.5);--day-full-bg:rgba(255,69,58,.12);
 }
 html,body{height:100%}
 body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:15px;line-height:1.45;overflow-x:hidden;transition:background .4s,color .4s}
 button{font-family:var(--font);color:inherit;touch-action:manipulation}
 ::-webkit-scrollbar{width:0;height:0}
 
-.glass{background:var(--surface);-webkit-backdrop-filter:blur(18px) saturate(160%);backdrop-filter:blur(18px) saturate(160%);border:1px solid var(--stroke);box-shadow:var(--shadow),inset 0 1px 0 var(--hi);border-radius:var(--r-lg)}
+.glass{background:var(--surface);-webkit-backdrop-filter:blur(20px) saturate(150%);backdrop-filter:blur(20px) saturate(150%);border:1px solid var(--stroke);box-shadow:var(--shadow),inset 0 1px 0 var(--hi);border-radius:var(--r-lg)}
 
 /* buttons */
 .btn{border:0;border-radius:16px;padding:14px 18px;font-weight:800;font-size:15px;cursor:pointer;transition:transform .15s,box-shadow .2s,opacity .2s}
 .btn:active{transform:scale(.96)}
-.btn-gold{background:var(--gold-grad);color:#241a06;box-shadow:0 6px 18px rgba(190,145,40,.35),inset 0 1px 0 rgba(255,255,255,.55)}
+.btn-gold{background:var(--gold);color:#fff;box-shadow:0 4px 14px rgba(10,132,255,.28)}
 .btn-ghost{background:var(--surface-2);color:var(--text);border:1px solid var(--stroke)}
 .btn-danger{background:transparent;color:var(--danger);border:1px solid var(--danger)}
 .btn[disabled]{opacity:.45;pointer-events:none}
@@ -160,6 +160,25 @@ button{font-family:var(--font);color:inherit;touch-action:manipulation}
 .sk{position:relative;overflow:hidden;background:var(--surface-2);border-radius:12px}
 .sk::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,var(--hi),transparent);animation:sh 1.2s infinite;transform:translateX(-100%)}
 @keyframes sh{to{transform:translateX(100%)}}
+
+/* ============================================================
+   MOBILE PERFORMANCE MODE — тот же принцип, что в casino.html
+   и в index.html: убираем дорогой backdrop-filter на телефонах.
+   ============================================================ */
+@media (max-width:700px){
+  .glass,.sheet,.toast{
+    backdrop-filter:none !important;
+    -webkit-backdrop-filter:none !important;
+    background:var(--sheet-bg) !important;
+  }
+  .bd{backdrop-filter:none !important;-webkit-backdrop-filter:none !important;background:rgba(0,0,0,.5) !important}
+  .cal-cell,.up-row,.chip-day{
+    transition:transform .12s ease,border-color .12s ease !important;
+  }
+}
+@media (max-width:700px) and (prefers-reduced-motion:reduce){
+  .cal-cell.flash,.sk::after{animation-duration:.01ms !important;animation-iteration-count:1 !important}
+}
 </style>
 </head>
 <body>
