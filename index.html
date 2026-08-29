@@ -1182,7 +1182,7 @@ function fixCalendarOffset() {
   if (topbar && frame) {
     const topbarHeight = topbar.offsetHeight;
     const topbarTop = parseInt(getComputedStyle(topbar).top) || 0;
-    const totalOffset = topbarHeight + topbarTop + 4;
+    const totalOffset = topbarHeight + topbarTop + 0;
     
     frame.style.marginTop = totalOffset + 'px';
     frame.style.height = 'calc(100dvh - ' + totalOffset + 'px)';
