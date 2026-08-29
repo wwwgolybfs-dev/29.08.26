@@ -269,17 +269,15 @@ textarea.f-in{min-height:70px;resize:vertical}
 /* calendar iframe wrapper */
 #calFrame{
   width:100%;
-  height:calc(100dvh - 60px);
-  min-height:calc(100dvh - 60px);
   border:0;
   border-radius:0 !important;
   background:transparent;
   display:block;
   margin:0 auto;
   padding:0;
-  margin-top:60px;
   position:relative;
   z-index:1;
+  /* margin-top и height теперь будут устанавливаться через JS */
 }
 
 /* shell / launch / toasts / skeleton */
@@ -1176,6 +1174,35 @@ async function initApp(){
   // Календарь: если iframe уже сообщил о готовности — пушим данные сейчас
   if(calReady) pushCalendarData();
 }
+
+// ================= АВТОПОДСТРОЙКА КАЛЕНДАРЯ ПОД ШАПКУ =================
+function fixCalendarOffset() {
+  const topbar = document.querySelector('.topbar');
+  const frame = document.getElementById('calFrame');
+  if (topbar && frame) {
+    const topbarHeight = topbar.offsetHeight;
+    const topbarTop = parseInt(getComputedStyle(topbar).top) || 0;
+    const totalOffset = topbarHeight + topbarTop + 4;
+    
+    frame.style.marginTop = totalOffset + 'px';
+    frame.style.height = 'calc(100dvh - ' + totalOffset + 'px)';
+    frame.style.minHeight = 'calc(100dvh - ' + totalOffset + 'px)';
+  }
+}
+
+window.addEventListener('load', fixCalendarOffset);
+window.addEventListener('resize', fixCalendarOffset);
+window.addEventListener('orientationchange', function() {
+  setTimeout(fixCalendarOffset, 300);
+});
+
+// Переопределяем pushCalendarData чтобы вызывать подстройку после обновления
+const originalPushCalendar = pushCalendarData;
+pushCalendarData = function() {
+  originalPushCalendar();
+  setTimeout(fixCalendarOffset, 100);
+};
+
 initApp();
 </script>
 </body>
