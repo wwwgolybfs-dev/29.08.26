@@ -67,7 +67,7 @@ img{display:block}
 .glass{background:var(--surface);-webkit-backdrop-filter:blur(20px) saturate(150%);backdrop-filter:blur(20px) saturate(150%);border:1px solid var(--stroke);box-shadow:var(--shadow),inset 0 1px 0 var(--hi);border-radius:var(--r-lg)}
 
 /* topbar */
-.topbar{position:sticky;top:calc(8px + env(safe-area-inset-top));z-index:40;width:min(560px,calc(100% - 20px));margin:0 auto;display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:20px}
+.topbar{position:sticky;top:calc(8px + env(safe-area-inset-top));z-index:60;width:min(560px,calc(100% - 20px));margin:0 auto;display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:20px}
 .icon-btn{width:40px;height:40px;flex:none;border-radius:14px;border:1px solid var(--stroke);background:var(--surface-2);display:grid;place-items:center;cursor:pointer;transition:transform .15s;font-size:18px;color:var(--text)}
 .icon-btn:active{transform:scale(.92)}
 .tb-title{flex:1;font-weight:800;font-size:17px;letter-spacing:.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -269,18 +269,17 @@ textarea.f-in{min-height:70px;resize:vertical}
 /* calendar iframe wrapper */
 #calFrame{
   width:100%;
-  height:100dvh;
-  min-height:100dvh;
+  height:calc(100dvh - 70px);
+  min-height:calc(100dvh - 70px);
   border:0;
-  border-radius:0 !important; /* убираем скругление */
+  border-radius:0 !important;
   background:transparent;
   display:block;
-  margin:0;
+  margin:0 auto;
   padding:0;
-  position:fixed; /* фиксируем чтобы перекрыть всё */
-  top:0;
-  left:0;
-  z-index:50;
+  margin-top:70px;
+  position:relative;
+  z-index:1;
 }
 
 /* shell / launch / toasts / skeleton */
