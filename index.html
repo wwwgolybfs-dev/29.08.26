@@ -269,12 +269,18 @@ textarea.f-in{min-height:70px;resize:vertical}
 /* calendar iframe wrapper */
 #calFrame{
   width:100%;
-  height:calc(100dvh - 160px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
-  min-height:560px;
+  height:100dvh;
+  min-height:100dvh;
   border:0;
-  border-radius:var(--r-lg);
+  border-radius:0 !important; /* убираем скругление */
   background:transparent;
   display:block;
+  margin:0;
+  padding:0;
+  position:fixed; /* фиксируем чтобы перекрыть всё */
+  top:0;
+  left:0;
+  z-index:50;
 }
 
 /* shell / launch / toasts / skeleton */
