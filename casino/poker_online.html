@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
@@ -30,25 +31,18 @@ button{font:inherit;color:inherit;cursor:pointer;border:none;background:none}
 .card-box p{font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.4}
 .row{display:flex;gap:8px}
 .input{flex:1;height:42px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--text);padding:0 12px;font-size:13px;font-weight:700;text-transform:uppercase}
-.btn{height:42px;border-radius:12px;padding:0 16px;font-size:12px;font-weight:900;white-space:nowrap}
+.btn{height:42px;border-radius:12px;padding:0 16px;font-size:12px;font-weight:900;white-space:nowrap;transition:transform .1s}
+.btn:active:not(:disabled){transform:scale(.96)}
 .btn.primary{background:linear-gradient(135deg,#1ed9a0,#0a9a6a);color:#fff;box-shadow:0 4px 14px rgba(18,184,138,.25)}
 .btn.secondary{background:linear-gradient(135deg,#3a82f0,#1a4a9a);color:#fff}
 .btn.ghost{border:1px solid var(--line);background:var(--panel);color:var(--muted)}
-.btn:disabled{opacity:.4}
+.btn:disabled{opacity:.4;cursor:not-allowed}
 .rooms{display:flex;flex-direction:column;gap:8px;max-height:180px;overflow-y:auto}
-.room{display:flex;align-items:center;gap:10px;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--bg);cursor:pointer}
+.room{display:flex;align-items:center;gap:10px;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--bg);cursor:pointer;transition:border-color .15s}
 .room:active{border-color:var(--gold)}
 .room .code{font-weight:900;color:var(--gold);font-size:13px;min-width:56px}
 .room .meta{flex:1;font-size:11px;color:var(--muted)}
 .room .join{font-size:11px;font-weight:800;color:var(--green)}
-.tier-grid{display:flex;flex-direction:column;gap:8px;margin:10px 0 12px}
-.tier-btn{text-align:left;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--bg);cursor:pointer;transition:.15s}
-.tier-btn:active{transform:scale(.98)}
-.tier-btn.on{border-color:var(--gold);background:rgba(212,175,55,.12);box-shadow:0 0 0 1px var(--gold)}
-.tier-btn .t-name{font-weight:900;font-size:13px;margin-bottom:3px}
-.tier-btn .t-meta{font-size:11px;color:var(--muted);line-height:1.35}
-.tier-btn.locked{opacity:.45;cursor:not-allowed}
-.tier-hint{font-size:11px;color:var(--muted);margin-top:4px}
 
 /* TABLE */
 .table-wrap{display:none;position:relative;margin-bottom:10px;flex:1}
@@ -114,7 +108,7 @@ button{font:inherit;color:inherit;cursor:pointer;border:none;background:none}
 .seat .bet-pill:empty{display:none}
 .seat .cards{display:flex;justify-content:center;gap:4px;margin-top:5px;min-height:50px}
 .seat .role{position:absolute;top:-4px;right:-8px;font-size:7px;font-weight:900;background:var(--gold);color:#1a1408;border-radius:4px;padding:2px 4px;z-index:2}
-.seat .hand-name{font-size:8px;font-weight:800;color:var(--green);margin-top:2px;min-height:12px;text-shadow:0 1px 2px rgba(0,0,0,0.8);}
+.seat .hand-name{font-size:8px;font-weight:800;color:var(--green);margin-top:2px;min-height:12px;text-shadow:0 1px 2px rgba(0,0,0,0.8)}
 
 /* action bubble over seat */
 .seat .action-bubble{
@@ -137,13 +131,7 @@ button{font:inherit;color:inherit;cursor:pointer;border:none;background:none}
 .card .rank.bot{transform:rotate(180deg);align-self:flex-end}
 .card.red{color:#c43b4e}.card.black{color:#1a1e28}
 .card.back{background:linear-gradient(145deg,#1a3a5c,#0d2240);border:1.5px solid rgba(232,200,114,.35);color:transparent}
-/* Подсветка активных карт комбинации */
-.card.active-combo {
-  border-color: var(--gold);
-  box-shadow: 0 0 10px var(--gold-glow), inset 0 0 5px rgba(232,200,114,0.3);
-  transform: translateY(-2px);
-}
-
+.card.active-combo{border-color:var(--gold);box-shadow:0 0 10px var(--gold-glow),inset 0 0 5px rgba(232,200,114,0.3);transform:translateY(-2px)}
 .seat.me .card{width:44px;height:62px;font-size:12px}
 .seat.me .card .suit{font-size:15px}
 @keyframes dealIn{from{opacity:0;transform:translateY(-12px) scale(.88)}to{opacity:1;transform:none}}
@@ -153,8 +141,9 @@ button{font:inherit;color:inherit;cursor:pointer;border:none;background:none}
 .blinds{font-size:10px;color:var(--muted);font-weight:700}
 .actions{display:none;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:8px}
 .act{height:48px;border-radius:13px;font-size:10px;font-weight:900;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:1px solid var(--line);background:var(--panel);transition:transform .1s}
-.act:active{transform:scale(.96)}
-.act:disabled{opacity:.3}.act.fold{background:linear-gradient(160deg,#3a1420,#220a10);border-color:rgba(200,50,60,.3);color:rgba(230,100,100,.95)}
+.act:active:not(:disabled){transform:scale(.96)}
+.act:disabled{opacity:.3;cursor:not-allowed}
+.act.fold{background:linear-gradient(160deg,#3a1420,#220a10);border-color:rgba(200,50,60,.3);color:rgba(230,100,100,.95)}
 .act.check{background:linear-gradient(160deg,#1e2a24,#121a16)}
 .act.call{background:linear-gradient(160deg,#1a4a9a,#123570);border-color:rgba(74,144,232,.3)}
 .act.raise{background:linear-gradient(160deg,#3a2a08,#201508);border-color:rgba(232,200,114,.3);color:var(--gold)}
@@ -163,7 +152,7 @@ button{font:inherit;color:inherit;cursor:pointer;border:none;background:none}
 .raise-amt{font-size:13px;font-weight:900;color:var(--gold);min-width:60px;text-align:right}
 .note{text-align:center;color:#3a4a3a;font-size:9px;margin-top:auto;padding-top:8px;font-weight:600}
 .host-bar{display:none;margin-bottom:8px}
-.host-bar .btn{width:100%; height: 50px; font-size: 14px; letter-spacing: 1px;}
+.host-bar .btn{width:100%;height:50px;font-size:14px;letter-spacing:1px}
 </style>
 </head>
 <body>
@@ -181,10 +170,8 @@ button{font:inherit;color:inherit;cursor:pointer;border:none;background:none}
   <div class="lobby" id="lobby">
     <div class="card-box">
       <h3>Создать комнату</h3>
-      <p>Выберите уровень стола по вашему балансу. Блайнды = 4% от мин. порога.</p>
-      <div class="tier-grid" id="tierGrid"></div>
-      <div class="tier-hint" id="tierHint">Загрузка баланса…</div>
-      <button class="btn primary" id="createBtn" style="width:100%;margin-top:10px">Создать комнату</button>
+      <p>Вы — хост. Дилер раздаёт карты. 2–3 игрока за столом.</p>
+      <button class="btn primary" id="createBtn" style="width:100%">Создать комнату</button>
     </div>
     <div class="card-box">
       <h3>Войти по коду</h3>
@@ -195,7 +182,7 @@ button{font:inherit;color:inherit;cursor:pointer;border:none;background:none}
     </div>
     <div class="card-box">
       <h3>Открытые комнаты</h3>
-      <div class="rooms" id="roomsList"><div style="text-align:center;color:var(--muted);font-size:12px;padding:12px">Загрузка…</div></div>
+      <div class="rooms" id="roomsList"><div style="text-align:center;color:var(--muted);font-size:12px;padding:12px">Загрузка...</div></div>
       <button class="btn ghost" id="refreshBtn" style="width:100%;margin-top:10px">Обновить</button>
     </div>
   </div>
@@ -239,6 +226,7 @@ button{font:inherit;color:inherit;cursor:pointer;border:none;background:none}
 </div>
 
 <script>
+// ============ ИНИЦИАЛИЗАЦИЯ ============
 const SUPABASE_URL = 'https://heubrattlnikielnfheg.supabase.co';
 const PROJECT_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhldWJyYXR0bG5pa2llbG5maGVnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ5NzYyMjcsImV4cCI6MjEwMDU1MjIyN30._lRs77YnsILFN_Ru4uR2wDWQFtAlazZh8UaaKa7fsnM';
 
@@ -246,7 +234,7 @@ const sb = window.supabase?.createClient(SUPABASE_URL, PROJECT_ANON_KEY) || null
 
 const SUITS = ['♠','♥','♦','♣'];
 const RANKS = ['2','3','4','5','6','7','8','9','10','J','Q','K','A'];
-const RANK_VAL = {2:2,3:3,4:4,5:5,6:6,7:7,8:8,9:9,10:10,J:11,Q:12,K:13,A:14};
+const RANK_VAL = {'2':2,'3':3,'4':4,'5':5,'6':6,'7':7,'8':8,'9':9,'10':10,'J':11,'Q':12,'K':13,'A':14};
 const PHASE_RU = {
   lobby:'Лобби',
   deal:'Раздача',
@@ -257,69 +245,12 @@ const PHASE_RU = {
   showdown:'Шоудаун'
 };
 
-const START_STACK = 1000;
-const MAX_PLAYERS = 3;
-const STALE_MS = 30000; // 30с без heartbeat = игрок вышел (закрыл Telegram)
-
-/** Уровни комнат: min/max баланса, блайнды = 4% от min (для joe min=0 → 4% от max) */
-const ROOM_TIERS = [
-  { id: 'joe',      name: 'Друг Джоу',   emoji: '🧢', min: 0,        max: 250000,    color: '#6b7280' },
-  { id: 'beggar',   name: 'Нищие',       emoji: '🪙', min: 250000,   max: 1000000,   color: '#a16207' },
-  { id: 'poor',     name: 'Бедные',      emoji: '💸', min: 1000000,  max: 5000000,   color: '#2563eb' },
-  { id: 'middle',   name: 'Средний класс', emoji: '🏠', min: 5000000, max: 15000000,  color: '#16a34a' },
-  { id: 'oligarch', name: 'Олигархи',    emoji: '👑', min: 15000000, max: 70000000,  color: '#d4af37' }
-];
-
-function blindsForTier(tier) {
-  if (!tier) return { sb: 10, bb: 20 };
-  const base = tier.min > 0 ? tier.min : tier.max; // joe: 4% от 250k
-  let bb = Math.floor(base * 0.04);
-  // округление до «красивого» шага
-  if (bb >= 100000) bb = Math.round(bb / 10000) * 10000;
-  else if (bb >= 10000) bb = Math.round(bb / 1000) * 1000;
-  else if (bb >= 1000) bb = Math.round(bb / 100) * 100;
-  else bb = Math.max(20, bb);
-  const sb = Math.max(10, Math.floor(bb / 2));
-  return { sb, bb };
-}
-
-function getTier(id) {
-  return ROOM_TIERS.find(t => t.id === id) || null;
-}
-
-function tierForBalance(bal) {
-  const v = Math.floor(Number(bal) || 0);
-  // границы: [min, max] включительно; при равенстве верхней — эта же комната
-  for (const t of ROOM_TIERS) {
-    if (v >= t.min && v <= t.max) return t;
-  }
-  // выше олигархов — только олигархи (с капом), ниже нуля — joe
-  if (v > ROOM_TIERS[ROOM_TIERS.length - 1].max) return ROOM_TIERS[ROOM_TIERS.length - 1];
-  return ROOM_TIERS[0];
-}
-
-function canEnterTier(bal, tier) {
-  if (!tier) return false;
-  const v = Math.floor(Number(bal) || 0);
-  return v >= tier.min && v <= tier.max;
-}
-
-function roomSB(st = state) {
-  const t = getTier(st && st.tierId);
-  if (st && st.sb != null) return Number(st.sb);
-  return blindsForTier(t).sb;
-}
-
-function roomBB(st = state) {
-  const t = getTier(st && st.tierId);
-  if (st && st.bb != null) return Number(st.bb);
-  return blindsForTier(t).bb;
-}
-
-// совместимость со старым кодом: SB/BB как геттеры через функции в местах использования заменим
-const SB = 10; // fallback defaults only
+const SB = 10;
 const BB = 20;
-let selectedTierId = null;
+const START_STACK = 1000;
+const TABLE_LIMIT = 250000;
+const MAX_PLAYERS = 3;
+const STALE_MS = 45000;
 
 const fmt = n => Number(n || 0).toLocaleString('ru-RU');
 const $ = id => document.getElementById(id);
@@ -327,11 +258,7 @@ const isGuestId = id => !id || String(id).startsWith('g_');
 
 function esc(s) {
   return String(s ?? '').replace(/[&<>"']/g, c => ({
-    '&':'&amp;',
-    '<':'&lt;',
-    '>':'&gt;',
-    '"':'&quot;',
-    "'":'&#39;'
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
   }[c]));
 }
 
@@ -377,18 +304,17 @@ let isHost = false;
 let channel = null;
 let state = null;
 let heartbeatTimer = null;
-let actionBusy = false;
 let leaving = false;
 let advancing = false;
 
-// Private host-only card data
 let privateDeck = [];
 let privateHoles = {};
 let lastSecretHandId = null;
-
-// Local my hole cache
 let myHole = [];
 let lastHandId = null;
+let lastSettledHandId = null; // guard против двойного списания/начисления
+
+// ============ БАЗОВЫЕ ФУНКЦИИ ============
 
 function resolvePlayer() {
   try {
@@ -406,7 +332,9 @@ function resolvePlayer() {
         };
       }
     }
-  } catch(e) {}
+  } catch(e) {
+    console.warn('Telegram WebApp error:', e);
+  }
 
   if (!player.id) player.id = 'g_' + Math.random().toString(36).slice(2, 9);
 }
@@ -454,17 +382,21 @@ async function loadBalance() {
 
     balance = Number(data?.total_score || 0);
     $('balance').textContent = fmt(balance);
-    try { renderTierGrid(); } catch(e) {}
-  } catch(e) {}
+  } catch(e) {
+    console.warn('Balance load error:', e);
+  }
 }
 
-function seatBuyIn(tier) {
+function setStatus(text, kind) {
+  $('status').textContent = text;
+  $('status').className = 'status-text ' + (kind || 'info');
+}
+
+function seatBuyIn() {
   if (isGuestId(player.id)) return START_STACK;
   const val = Math.floor(Number(balance) || 0);
-  const t = tier || getTier(state && state.tierId) || tierForBalance(val);
-  // стек за столом — весь баланс, но не выше потолка комнаты
-  const capped = t ? Math.min(val, t.max) : val;
-  return Math.max(0, capped);
+  if (val < SB) return START_STACK;
+  return Math.min(val, TABLE_LIMIT);
 }
 
 function clampBet(amount, stack) {
@@ -473,279 +405,159 @@ function clampBet(amount, stack) {
   return Math.max(0, Math.min(a, s));
 }
 
-let lastScoreSyncHandId = null;
-
-async function applyScoreDelta(delta, handId) {
-  if (!sb || !player.id || isGuestId(player.id)) return;
-  if (!delta || !handId) return;
-  if (handId === lastScoreSyncHandId) return;
-
-  try {
-    const { data, error } = await sb.rpc('settle_hand', {
-      p_hand_id: handId,
-      p_user_id: player.id,
-      p_delta: Math.floor(delta)
-    });
-
-    if (error) throw error;
-
-    if (data?.applied) {
-      balance = Number(data.total_score || 0);
-      $('balance').textContent = fmt(balance);
-      lastScoreSyncHandId = handId;
-    } else {
-      await loadBalance();
-      lastScoreSyncHandId = handId;
-    }
-  } catch(e) {
-    console.error('[score] sync failed', e);
-  }
-}
-
-async function settleMyScoreIfNeeded() {
-  if (!state || !state.handOver) return;
-  if (!sb || !player.id || isGuestId(player.id)) return;
-
-  const me = (state.players || []).find(p => p.id === player.id);
-  if (!me) return;
-
-  if (me.stackAtHandStart == null || me.stackAtHandStart === undefined) return;
-
-  const handId = state.handId || null;
-  if (!handId) return;
-  if (handId === lastScoreSyncHandId) return;
-
-  const delta = Math.floor(me.stack || 0) - Math.floor(me.stackAtHandStart);
-  me.stackAtHandStart = null;
-
-  await applyScoreDelta(delta, handId);
-}
-
-async function settleOnLeave() {
-  if (!state) return;
-
-  const me = (state.players || []).find(p => p.id === player.id);
-  if (!me) return;
-
-  if (me.stackAtHandStart != null && me.stackAtHandStart !== undefined) {
-    const delta = Math.floor(me.stack || 0) - Math.floor(me.stackAtHandStart);
-    me.stackAtHandStart = null;
-    await applyScoreDelta(delta, state.handId || ('leave_' + Date.now()));
-  }
-}
-
 function genCode() {
-  return Math.random().toString(36).slice(2, 8).toUpperCase();
-}
-
-function setStatus(t, c) {
-  $('status').textContent = t;
-  $('status').className = 'status-text ' + (c || 'info');
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let code = '';
+  for (let i = 0; i < 4; i++) {
+    code += chars[Math.floor(Math.random() * chars.length)];
+  }
+  return code;
 }
 
 function newDeck() {
-  const d = [];
-  for (const s of SUITS) {
-    for (const r of RANKS) {
-      d.push({ r, s, red: s === '♥' || s === '♦' });
+  const deck = [];
+  for (let s = 0; s < 4; s++) {
+    for (let r = 0; r < 13; r++) {
+      deck.push({ r: RANKS[r], s: SUITS[s] });
     }
   }
-
-  for (let i = d.length - 1; i > 0; i--) {
-    const rnd = crypto?.getRandomValues ? crypto.getRandomValues(new Uint32Array(1))[0] : Math.floor(Math.random() * (i + 1));
-    const j = rnd % (i + 1);
-    [d[i], d[j]] = [d[j], d[i]];
-  }
-
-  return d;
+  return deck.sort(() => Math.random() - 0.5);
 }
 
-function cardHTML(c, fd, isActive = false) {
-  if (fd || !c || !c.r || !c.s) return '<div class="card back"></div>';
-  const activeClass = isActive ? ' active-combo' : '';
-  return `<div class="card ${c.red ? 'red' : 'black'}${activeClass}"><span class="rank">${c.r}</span><span class="suit">${c.s}</span><span class="rank bot">${c.r}</span></div>`;
+function cardHTML(c, isBack, isActive) {
+  if (isBack) return `<div class="card back"></div>`;
+  if (!c) return '<div style="width:38px;height:54px"></div>';
+  const isRed = c.s === '♥' || c.s === '♦';
+  const cls = `card ${isRed ? 'red' : 'black'} ${isActive ? 'active-combo' : ''}`;
+  return `<div class="${cls}"><div class="rank">${c.r}</div><div class="suit">${c.s}</div><div class="rank bot">${c.r}</div></div>`;
 }
+
+// hand rank: 1=high,2=pair,3=two-pair,4=trips,5=straight,6=flush,7=full-house,8=quads,9=str-flush,10=royal
+const HAND_NAMES = ['—','Старшая карта','Пара','Две пары','Тройка','Стрит','Флеш','Фулл-хаус','Каре','Стрит-флеш','Роял'];
 
 function evalHand(cards) {
-  if (!cards || cards.length < 5) return { rank: 0, name: '—', score: 0, kickers: [] };
-
-  const vals = cards.map(c => RANK_VAL[c.r]).sort((a, b) => b - a);
+  // cards = [{r,s}, ...] exactly 5 cards
+  const rV = cards.map(c => RANK_VAL[String(c.r)] || 0).sort((a, b) => b - a);
   const suits = cards.map(c => c.s);
+  const isFlush = new Set(suits).size === 1;
 
-  const counts = {};
-  vals.forEach(v => { counts[v] = (counts[v] || 0) + 1; });
+  const uniq = [...new Set(rV)];
+  const freq = {};
+  uniq.forEach(r => { freq[r] = rV.filter(x => x === r).length; });
+  const counts = Object.values(freq).sort((a, b) => b - a);
 
-  const byCount = Object.entries(counts)
-    .map(([v, c]) => ({ v: +v, c }))
-    .sort((a, b) => b.c - a.c || b.v - a.v);
+  const gaps = rV.slice(0, -1).map((v, i) => v - rV[i + 1]);
+  const isStraight = gaps.every(g => g === 1);
+  // wheel: A-2-3-4-5 → rV=[14,5,4,3,2]
+  const isWheel = rV[0] === 14 && rV[1] === 5 && rV[2] === 4 && rV[3] === 3 && rV[4] === 2;
 
-  const unique = [...new Set(vals)];
-
-  let flushSuit = null;
-  for (const s of SUITS) {
-    if (suits.filter(x => x === s).length >= 5) {
-      flushSuit = s;
-      break;
-    }
-  }
-
-  const isFlush = !!flushSuit;
-
-  function straightHigh(rankList) {
-    const u = [...new Set(rankList)].sort((a, b) => b - a);
-    if (u.includes(14)) u.push(1);
-    u.sort((a, b) => b - a);
-
-    for (let i = 0; i <= u.length - 5; i++) {
-      if (u[i] - u[i + 4] === 4) return u[i] === 1 ? 5 : u[i];
-    }
-
-    return 0;
-  }
-
-  const sh = straightHigh(vals);
-
-  let sfHigh = 0;
-  if (isFlush) {
-    const fvals = cards.filter(c => c.s === flushSuit).map(c => RANK_VAL[c.r]);
-    sfHigh = straightHigh(fvals);
-  }
-
-  let rank = 0;
-  let name = 'Старшая карта';
-  let kickers = [];
-
-  if (sfHigh) {
-    rank = 8;
-    name = sfHigh === 14 ? 'Рояль-флеш' : 'Стрит-флеш';
-    kickers = [sfHigh];
-  } else if (byCount[0].c === 4) {
-    rank = 7;
-    name = 'Каре';
-    const quad = byCount[0].v;
-    const kicker = unique.find(v => v !== quad) || 0;
-    kickers = [quad, kicker];
-  } else if (byCount[0].c === 3 && byCount[1] && byCount[1].c >= 2) {
-    rank = 6;
-    name = 'Фулл-хаус';
-    kickers = [byCount[0].v, byCount[1].v];
+  let hand;
+  if (counts[0] === 4) {
+    hand = 8;
+  } else if (counts[0] === 3 && counts[1] === 2) {
+    hand = 7;
+  } else if (isFlush && (isStraight || isWheel)) {
+    hand = (rV[0] === 14 && rV[1] === 13) ? 10 : 9; // royal or str-flush
   } else if (isFlush) {
-    rank = 5;
-    name = 'Флеш';
-    kickers = cards
-      .filter(c => c.s === flushSuit)
-      .map(c => RANK_VAL[c.r])
-      .sort((a, b) => b - a)
-      .slice(0, 5);
-  } else if (sh) {
-    rank = 4;
-    name = 'Стрит';
-    kickers = [sh];
-  } else if (byCount[0].c === 3) {
-    rank = 3;
-    name = 'Сет';
-    const trip = byCount[0].v;
-    kickers = [trip, ...unique.filter(v => v !== trip).slice(0, 2)];
-  } else if (byCount[0].c === 2 && byCount[1] && byCount[1].c === 2) {
-    rank = 2;
-    name = 'Две пары';
-    const hi = Math.max(byCount[0].v, byCount[1].v);
-    const lo = Math.min(byCount[0].v, byCount[1].v);
-    const kicker = unique.find(v => v !== hi && v !== lo) || 0;
-    kickers = [hi, lo, kicker];
-  } else if (byCount[0].c === 2) {
-    rank = 1;
-    name = 'Пара';
-    const pair = byCount[0].v;
-    kickers = [pair, ...unique.filter(v => v !== pair).slice(0, 3)];
+    hand = 6;
+  } else if (isStraight || isWheel) {
+    hand = 5;
+  } else if (counts[0] === 3) {
+    hand = 4;
+  } else if (counts[0] === 2 && counts[1] === 2) {
+    hand = 3;
+  } else if (counts[0] === 2) {
+    hand = 2;
   } else {
-    rank = 0;
-    name = 'Старшая карта';
-    kickers = unique.slice(0, 5);
+    hand = 1;
   }
 
-  let score = rank;
-  const ks = kickers.slice(0, 5);
-  while (ks.length < 5) ks.push(0);
-  ks.forEach(k => { score = score * 15 + k; });
-
-  return { rank, name, score, kickers };
+  // tiebreaker: sort by frequency desc, then rank desc
+  const tbArr = isWheel ? [5, 4, 3, 2, 1] : [...uniq].sort((a, b) => (freq[b] - freq[a]) || (b - a));
+  return { hand, tiebreaker: tbArr.join(',') };
 }
 
 function bestHand(hole, board) {
-  const all = [...(hole || []), ...(board || [])];
-  if (all.length < 5) return { score: -1, name: '—', usedHole: [], usedBoard: [] };
+  if (!Array.isArray(hole) || hole.length !== 2 || !Array.isArray(board) || board.length === 0) {
+    return { score: 0, name: '—', usedHole: [], usedBoard: [] };
+  }
 
-  let best = { score: -1, name: '', usedHole: [], usedBoard: [] };
-  const n = all.length;
-  const holeLen = hole?.length || 0;
+  const all = [...hole, ...board];
 
-  (function comb(s, ch) {
-    if (ch.length === 5) {
-      const subset = ch.map(i => all[i]);
-      const h = evalHand(subset);
+  let best_score = -1;
+  let best_name = '—';
+  let best_used_hole = [];
+  let best_used_board = [];
 
-      if (h.score > best.score) {
-        best = { ...h, usedHole: [], usedBoard: [] };
-        ch.forEach(idx => {
-          if (idx < holeLen) best.usedHole.push(idx);
-          else best.usedBoard.push(idx - holeLen);
-        });
+  const comb5 = (arr, k) => {
+    if (k === 1) return arr.map(x => [x]);
+    const res = [];
+    for (let i = 0; i <= arr.length - k; i++) {
+      for (const tail of comb5(arr.slice(i + 1), k - 1)) {
+        res.push([arr[i], ...tail]);
       }
-
-      return;
     }
+    return res;
+  };
 
-    for (let i = s; i < n; i++) {
-      ch.push(i);
-      comb(i + 1, ch);
-      ch.pop();
+  const indices = all.map((_, i) => i);
+  for (const combo of comb5(indices, 5)) {
+    const cards = combo.map(i => all[i]);
+    const ev = evalHand(cards);
+    // score: hand-rank as leading digits, then tiebreaker packed as 2-digit chunks
+    const tb = ev.tiebreaker.split(',').map(v => Number(v).toString().padStart(2, '0')).join('');
+    const score = ev.hand * 1e15 + parseInt(tb || '0', 10);
+
+    if (score > best_score) {
+      best_score = score;
+      best_name = HAND_NAMES[ev.hand] || '—';
+      best_used_hole = combo.filter(i => i < 2);
+      best_used_board = combo.filter(i => i >= 2).map(i => i - 2);
     }
-  })(0, []);
+  }
 
-  return best;
+  return { score: best_score, name: best_name, usedHole: best_used_hole, usedBoard: best_used_board };
 }
 
-function allSeated(st = state, includeLeft = false) {
-  if (!st) return [];
-  const arr = [
-    ...(st.players || []),
-    ...(st.sittingOut || [])
-  ];
-  return includeLeft ? arr : arr.filter(p => !p.left);
-}
-
-function activeCap() {
-  const pl = (state?.players || []).filter(p => !p.folded);
-  if (pl.length < 2) return Infinity;
-
-  return Math.min(...pl.map(p => (p.totalBet || 0) + (p.stack || 0)));
-}
-
-function playerSeat(extra, tier) {
-  const buy = seatBuyIn(tier || getTier(state && state.tierId));
-
+function playerSeat() {
   return {
     id: player.id,
     name: player.name,
-    stack: buy,
-    bet: 0,
+    photo: player.photo,
+    hatId: player.hatId,
+    stack: seatBuyIn(),
+    lastSeen: Date.now(),
     hole: [],
     holeRevealed: false,
     cardsDealt: false,
+    bet: 0,
     folded: false,
     allIn: false,
+    acted: false,
     handName: '',
     totalBet: 0,
-    acted: false,
-    sittingOut: false,
+    lastAction: null,
     left: false,
-    photo: player.photo || null,
-    hatId: player.hatId || 'none',
-    lastSeen: Date.now(),
-    ...extra
+    sittingOut: false,
+    stackAtHandStart: null
   };
 }
+
+function allSeated(st, includeLeft) {
+  if (!st) return [];
+  const p = (st.players || []).filter(x => !x.left || includeLeft);
+  const s = (st.sittingOut || []).filter(x => !x.left || includeLeft);
+  return [...p, ...s];
+}
+
+function activeCap() {
+  const pl = (state.players || []).filter(p => !p.folded && !p.allIn && !p.sittingOut);
+  if (!pl.length) return Infinity;
+  const stacks = pl.map(p => (p.bet || 0) + (p.stack || 0)).sort((a, b) => b - a);
+  return stacks.length < 2 ? Infinity : stacks[1];
+}
+
+// ============ SUPABASE & GAME STATE ============
 
 async function createRoom() {
   if (!sb) {
@@ -756,23 +568,12 @@ async function createRoom() {
   await loadHat();
   await loadBalance();
 
-  const tier = getTier(selectedTierId) || tierForBalance(balance);
-  if (!canEnterTier(balance, tier) && !isGuestId(player.id)) {
-    setStatus('Ваш баланс не подходит для «' + tier.name + '»', 'loss');
-    return;
-  }
-
-  const blinds = blindsForTier(tier);
   const code = genCode();
 
   const initial = {
     phase: 'lobby',
     dealMsg: '',
-    tierId: tier.id,
-    tierName: tier.name,
-    sb: blinds.sb,
-    bb: blinds.bb,
-    players: [playerSeat(null, tier)],
+    players: [playerSeat()],
     sittingOut: [],
     hostId: player.id,
     board: [],
@@ -783,11 +584,12 @@ async function createRoom() {
     bbIdx: 0,
     toAct: null,
     currentBet: 0,
-    minRaise: blinds.bb,
+    minRaise: BB,
     actionCount: 0,
     handOver: false,
     handId: null,
-    pendingStreet: false
+    pendingStreet: false,
+    version: 0
   };
 
   try {
@@ -814,24 +616,24 @@ async function createRoom() {
       await sb.rpc('buy_in', {
         p_user_id: player.id,
         p_room_id: roomId,
-        p_amount: seatBuyIn(tier)
+        p_amount: seatBuyIn()
       });
-    } catch(e) {}
+    } catch(e) {
+      console.warn('Buy-in error:', e);
+    }
 
     await subscribeRoom();
     startHeartbeat();
     showTable();
-    setStatus(tier.emoji + ' ' + tier.name + ' · ' + code, 'info');
-    updateBlindsLabel();
+    setStatus('Комната ' + code, 'info');
   } catch(e) {
-    console.error(e);
+    console.error('Create room error:', e);
     roomId = 'local_' + code;
     roomCode = code;
     isHost = true;
     state = initial;
     showTable();
-    setStatus('Локально ' + code + ' (нет таблицы poker_rooms)', 'info');
-    $('dealMsg').textContent = 'Создайте таблицу poker_rooms в Supabase';
+    setStatus('Локально (нет poker_rooms)', 'info');
   }
 }
 
@@ -850,7 +652,6 @@ async function joinRoom(code) {
       .maybeSingle();
 
     if (error) throw error;
-
     if (!data) {
       setStatus('Комната не найдена', 'loss');
       return;
@@ -865,25 +666,6 @@ async function joinRoom(code) {
     state.players = state.players || [];
     state.sittingOut = state.sittingOut || [];
 
-    // Миграция старых комнат без tier
-    if (!state.tierId) {
-      state.tierId = 'joe';
-      state.tierName = 'Друг Джоу';
-      const bl = blindsForTier(getTier('joe'));
-      state.sb = state.sb != null ? state.sb : bl.sb;
-      state.bb = state.bb != null ? state.bb : bl.bb;
-    }
-
-    const roomTier = getTier(state.tierId);
-    if (roomTier && !isGuestId(player.id) && !canEnterTier(balance, roomTier)) {
-      setStatus(
-        'Нужен баланс ' + fmt(roomTier.min) + '–' + fmt(roomTier.max) +
-        ' для «' + roomTier.name + '» (у вас ' + fmt(balance) + ')',
-        'loss'
-      );
-      return;
-    }
-
     const seated = allSeated(state);
 
     if (!seated.some(p => p.id === player.id)) {
@@ -892,25 +674,21 @@ async function joinRoom(code) {
         return;
       }
 
-      const midHand = data.status === 'playing' && state.phase !== 'lobby' && !state.handOver;
+      const midHand = data.status === 'playing' && !['lobby', 'showdown'].includes(state.phase) && !state.handOver;
       if (midHand) {
         setStatus('Игра уже идёт', 'loss');
         return;
       }
 
-      state.players.push(playerSeat(null, roomTier));
+      state.players.push(playerSeat());
     } else {
-      const me = [...state.players, ...state.sittingOut].find(p => p.id === player.id);
+      const me = allSeated(state).find(p => p.id === player.id);
       if (me) {
         me.lastSeen = Date.now();
         me.hatId = player.hatId || me.hatId;
         me.photo = player.photo || me.photo;
         me.name = player.name || me.name;
         me.left = false;
-
-        if (!midHandSafe(state) && (me.stack || 0) < balance) {
-          me.stack = balance;
-        }
       }
     }
 
@@ -931,23 +709,29 @@ async function joinRoom(code) {
       await sb.rpc('buy_in', {
         p_user_id: player.id,
         p_room_id: roomId,
-        p_amount: seatBuyIn(roomTier)
+        p_amount: seatBuyIn()
       });
-    } catch(e) {}
+    } catch(e) {
+      console.warn('Buy-in error:', e);
+    }
 
     await subscribeRoom();
     startHeartbeat();
     showTable();
-    setStatus((roomTier ? roomTier.emoji + ' ' : '') + 'В комнате ' + code, 'info');
-    updateBlindsLabel();
+    setStatus('В комнате ' + code, 'info');
   } catch(e) {
-    console.error(e);
+    console.error('Join room error:', e);
     setStatus('Ошибка: ' + e.message, 'loss');
   }
 }
 
-function midHandSafe(st) {
-  return !!(st && st.phase && !['lobby', 'showdown'].includes(st.phase) && !st.handOver);
+function roomStatusFromState(st, forced) {
+  if (forced) return forced;
+  if (!st) return 'lobby';
+  if (!allSeated(st).length) return 'closed';
+  if (st.handOver || st.phase === 'lobby' || st.phase === 'showdown') return 'lobby';
+  if (st.phase && st.phase !== 'lobby') return 'playing';
+  return 'lobby';
 }
 
 async function listRooms() {
@@ -959,47 +743,22 @@ async function listRooms() {
   try {
     const { data, error } = await sb
       .from('poker_rooms')
-      .select('id,code,status,state,created_at,updated_at')
+      .select('code,status,state,created_at,updated_at')
       .in('status', ['lobby', 'playing'])
       .order('created_at', { ascending: false })
-      .limit(30);
+      .limit(20);
 
     if (error) throw error;
 
-    const now = Date.now();
-    const open = [];
-
-    for (const r of (data || [])) {
-      const st = r.state || {};
-      const seated = allSeated(st);
-      const updated = new Date(r.updated_at || r.created_at || 0).getTime();
-      const roomAgeStale = updated && (now - updated) > STALE_MS * 2;
-
-      // все игроки без свежего lastSeen ИЛИ комната давно не обновлялась
-      const everyoneGone = !seated.length || seated.every(p => {
-        const ls = Number(p.lastSeen || 0);
-        if (!ls) return roomAgeStale;
-        return (now - ls) >= STALE_MS;
-      });
-
-      if (everyoneGone || roomAgeStale && !seated.length) {
-        // закрываем «зомби»-комнаты (все вышли через закрытие Telegram)
-        closeAbandonedRoom(r.id, { phase: 'lobby', players: [], sittingOut: [], handOver: true });
-        continue;
-      }
-
-      if (!seated.length) continue;
-
+    const open = (data || []).filter(r => {
+      const n = allSeated(r.state || {}).length;
+      if (n === 0) return false;
       if (r.status === 'playing') {
-        if (!st.handOver && st.phase !== 'lobby' && st.phase !== 'showdown') {
-          // идёт раздача — в списке лобби не показываем, но комнату не трогаем
-          continue;
-        }
+        const st = r.state || {};
+        return !!st.handOver || st.phase === 'lobby' || st.phase === 'showdown';
       }
-
-      open.push(r);
-      if (open.length >= 10) break;
-    }
+      return r.status === 'lobby';
+    }).slice(0, 10);
 
     if (!open.length) {
       $('roomsList').innerHTML = '<div style="text-align:center;color:var(--muted);padding:12px;font-size:12px">Нет открытых комнат</div>';
@@ -1008,24 +767,14 @@ async function listRooms() {
 
     $('roomsList').innerHTML = open.map(r => {
       const n = allSeated(r.state || {}).length;
-      const st = r.state || {};
-      const tier = getTier(st.tierId);
-      const tierLabel = tier ? (tier.emoji + ' ' + tier.name) : '🃏 Стол';
-      const bl = (st.bb != null && st.sb != null) ? (fmt(st.sb) + '/' + fmt(st.bb)) : (tier ? (fmt(blindsForTier(tier).sb) + '/' + fmt(blindsForTier(tier).bb)) : '—');
-      const locked = tier && !isGuestId(player.id) && !canEnterTier(balance, tier);
-      return `<div class="room" data-code="${esc(r.code)}" data-locked="${locked ? '1' : '0'}" style="${locked ? 'opacity:.5' : ''}"><div class="code">${esc(r.code)}</div><div class="meta">${esc(tierLabel)} · ${n}/${MAX_PLAYERS}<br>Бл. ${bl}${locked ? ' · ваш баланс не подходит' : ''}</div><div class="join">${locked ? '🔒' : 'Войти →'}</div></div>`;
+      return `<div class="room" data-code="${esc(r.code)}"><div class="code">${esc(r.code)}</div><div class="meta">${n}/${MAX_PLAYERS} · ${esc(r.status)}</div><div class="join">Войти →</div></div>`;
     }).join('');
 
     $('roomsList').querySelectorAll('.room').forEach(el => {
-      el.onclick = () => {
-        if (el.dataset.locked === '1') {
-          setStatus('Ваш баланс не подходит для этой комнаты', 'loss');
-          return;
-        }
-        joinRoom(el.dataset.code);
-      };
+      el.onclick = () => joinRoom(el.dataset.code);
     });
   } catch(e) {
+    console.error('List rooms error:', e);
     $('roomsList').innerHTML = '<div style="text-align:center;color:var(--muted);padding:12px;font-size:12px">Нужна таблица poker_rooms</div>';
   }
 }
@@ -1073,30 +822,19 @@ async function subscribeRoom() {
     .subscribe();
 }
 
-function roomStatusFromState(st, forced) {
-  if (forced) return forced;
-  if (!st) return 'lobby';
-  if (!allSeated(st).length) return 'closed';
-  if (st.handOver || st.phase === 'lobby' || st.phase === 'showdown') return 'lobby';
-  if (st.phase && st.phase !== 'lobby') return 'playing';
-  return 'lobby';
-}
-
 async function pushState(extraStatus) {
   if (!state) return;
 
   const me = (state.players || []).find(p => p.id === player.id);
   if (me) me.lastSeen = Date.now();
 
-  // Сразу рисуем локально — не ждём сеть
-  onState();
-
-  if (!sb || !roomId || String(roomId).startsWith('local')) return;
+  if (!sb || !roomId || String(roomId).startsWith('local')) {
+    onState();
+    return;
+  }
 
   try {
     const status = roomStatusFromState(state, extraStatus);
-
-    // Network-safe copy: не отправляем колоду и чужие/свои hole вне showdown.
     const netState = JSON.parse(JSON.stringify(state));
 
     delete netState.deck;
@@ -1104,7 +842,7 @@ async function pushState(extraStatus) {
     const reveal = !!(netState.handOver || netState.phase === 'showdown');
 
     (netState.players || []).forEach(p => {
-      if (!reveal || !p.holeRevealed) {
+      if (p.id !== player.id && (!reveal || !p.holeRevealed)) {
         p.hole = [];
         p.holeRevealed = false;
       }
@@ -1122,9 +860,7 @@ async function pushState(extraStatus) {
       updated_at: new Date().toISOString()
     };
 
-    // Не блокируем UI дольше нужного
-    const { error } = await sb.from('poker_rooms').update(patch).eq('id', roomId);
-    if (error) throw error;
+    await sb.from('poker_rooms').update(patch).eq('id', roomId);
 
     if (status === 'closed') {
       try {
@@ -1132,7 +868,7 @@ async function pushState(extraStatus) {
       } catch(e) {}
     }
   } catch(e) {
-    console.error(e);
+    console.error('Push state error:', e);
     onState();
   }
 }
@@ -1146,7 +882,7 @@ async function leaveRoom(opts = {}) {
   try {
     if (state) {
       const idx = (state.players || []).findIndex(p => p.id === player.id);
-      const inHand = midHandSafe(state);
+      const inHand = state && state.phase && !['lobby', 'showdown'].includes(state.phase) && !state.handOver;
 
       if (inHand && idx >= 0) {
         const me = state.players[idx];
@@ -1154,12 +890,10 @@ async function leaveRoom(opts = {}) {
         if (!me.folded) {
           me.folded = true;
           me.acted = true;
-          setLastAction(me, 'fold', 'Выход');
+          me.lastAction = { type: 'fold', label: 'Выход' };
         }
 
         me.left = true;
-
-        await settleOnLeave();
 
         const alive = state.players.filter(p => !p.folded);
 
@@ -1184,8 +918,6 @@ async function leaveRoom(opts = {}) {
           } catch(e) {}
         }
       } else {
-        await settleOnLeave();
-
         const players = (state.players || []).filter(p => p.id !== player.id);
         const sitting = (state.sittingOut || []).filter(p => p.id !== player.id);
 
@@ -1223,15 +955,12 @@ async function leaveRoom(opts = {}) {
         }
 
         try {
-          await sb.rpc('cash_out', {
-            p_user_id: player.id,
-            p_room_id: roomId
-          });
+          await sb.rpc('cash_out', { p_user_id: player.id, p_room_id: roomId });
         } catch(e) {}
       }
     }
   } catch(e) {
-    console.error(e);
+    console.error('Leave room error:', e);
   }
 
   if (channel && sb) {
@@ -1259,83 +988,39 @@ async function leaveRoom(opts = {}) {
   }
 }
 
-function isPlayerStale(p, now = Date.now()) {
-  if (!p) return true;
-  if (p.id === player.id) return false;
-  if (p.left) return true;
-  const ls = Number(p.lastSeen || 0);
-  // нет lastSeen — считаем устаревшим (старые стейты / закрытие Telegram)
-  if (!ls) return true;
-  return (now - ls) >= STALE_MS;
-}
-
-/** Вычищает игроков, которые закрыли Telegram / пропали.
- *  Работает у любого оставшегося клиента (не только host).
- *  Во время раздачи — фолдит «мёртвых», между раздачами — удаляет из комнаты.
- */
 function pruneStalePlayers() {
-  if (!state) return false;
+  if (!state || !isHost) return false;
+
+  const betweenHands = !state.phase || state.phase === 'lobby' || state.handOver || state.phase === 'showdown';
+  if (!betweenHands) return false;
 
   const now = Date.now();
-  let changed = false;
-  const inHand = midHandSafe(state);
+  const before = allSeated(state, true).length;
 
-  // 1) Во время руки: фолдим пропавших, помечаем left
-  if (inHand) {
-    (state.players || []).forEach(p => {
-      if (p.id === player.id || p.left) return;
-      if (!isPlayerStale(p, now)) return;
-      if (!p.folded) {
-        p.folded = true;
-        p.acted = true;
-        setLastAction(p, 'fold', 'Отключение');
-      }
-      p.left = true;
-      changed = true;
-    });
+  const keep = p => {
+    if (p.left) return false;
+    const ls = p.lastSeen || 0;
+    if (!ls) return true;
+    return (now - ls) < STALE_MS;
+  };
 
-    // если остался один живой — отдаём банк
-    const alive = (state.players || []).filter(p => !p.folded && !p.left);
-    if (alive.length === 1 && !state.handOver) {
-      try { awardToSingleWinner(alive[0]); } catch(e) {}
-      changed = true;
+  state.players = (state.players || []).filter(keep);
+  state.sittingOut = (state.sittingOut || []).filter(keep);
+
+  const after = allSeated(state, true).length;
+
+  if (before !== after) {
+    if (!allSeated(state).length) {
+      state.phase = 'lobby';
+      state.handOver = true;
+    } else if (state.hostId && !allSeated(state).some(p => p.id === state.hostId)) {
+      state.hostId = allSeated(state)[0].id;
     }
+
+    return true;
   }
 
-  // 2) Между руками (или после handOver): полностью убираем stale/left
-  if (!inHand || state.handOver || state.phase === 'lobby' || state.phase === 'showdown') {
-    const before = allSeated(state, true).length;
-    state.players = (state.players || []).filter(p => p.id === player.id || (!p.left && !isPlayerStale(p, now)));
-    state.sittingOut = (state.sittingOut || []).filter(p => p.id === player.id || (!p.left && !isPlayerStale(p, now)));
-    if (allSeated(state, true).length !== before) changed = true;
-  }
-
-  // 3) Передача хоста, если текущий host пропал
-  const seated = allSeated(state);
-  if (seated.length) {
-    if (!state.hostId || !seated.some(p => p.id === state.hostId)) {
-      state.hostId = seated[0].id;
-      changed = true;
-    }
-  } else {
-    state.phase = 'lobby';
-    state.handOver = true;
-    changed = true;
-  }
-
-  return changed;
-}
-
-async function closeAbandonedRoom(id, st) {
-  if (!sb || !id || String(id).startsWith('local')) return;
-  try {
-    await sb.from('poker_rooms').update({
-      state: st || { phase: 'lobby', players: [], sittingOut: [], handOver: true },
-      status: 'closed',
-      updated_at: new Date().toISOString()
-    }).eq('id', id);
-  } catch(e) {}
-  try { await sb.from('poker_rooms').delete().eq('id', id); } catch(e) {}
+  return false;
 }
 
 function startHeartbeat() {
@@ -1344,30 +1029,21 @@ function startHeartbeat() {
   heartbeatTimer = setInterval(async () => {
     if (!roomId || !state || leaving) return;
 
-    // свой lastSeen
-    const me = (state.players || []).find(p => p.id === player.id) ||
-               (state.sittingOut || []).find(p => p.id === player.id);
-    if (me) me.lastSeen = Date.now();
+    let changed = false;
 
-    const changed = pruneStalePlayers();
+    if (isHost) {
+      changed = pruneStalePlayers();
+    }
 
     if (changed) {
-      const seated = allSeated(state);
-      if (!seated.length) {
-        // комната пуста — закрываем и выходим
-        await pushState('closed');
-        await closeAbandonedRoom(roomId, state);
+      await pushState(roomStatusFromState(state));
+
+      if (!allSeated(state).length) {
         await leaveRoom({ silent: true });
         return;
       }
-      await pushState(roomStatusFromState(state));
-      // обновить host_id в строке комнаты
-      if (sb && !String(roomId).startsWith('local') && state.hostId) {
-        try { await sb.from('poker_rooms').update({ host_id: state.hostId }).eq('id', roomId); } catch(e) {}
-      }
     }
 
-    // Только лёгкий touch — НЕ полный pushState (он перетирает чужие ходы и тормозит)
     if (sb && !String(roomId).startsWith('local')) {
       try {
         await sb.rpc('touch_room', {
@@ -1376,7 +1052,7 @@ function startHeartbeat() {
         });
       } catch(e) {}
     }
-  }, 10000);
+  }, 12000);
 }
 
 function stopHeartbeat() {
@@ -1385,6 +1061,8 @@ function stopHeartbeat() {
     heartbeatTimer = null;
   }
 }
+
+// ============ RENDERING ============
 
 function showTable() {
   $('lobby').style.display = 'none';
@@ -1411,7 +1089,9 @@ async function ensurePrivateSecrets() {
       privateHoles = data.holes || {};
       lastSecretHandId = state.handId;
     }
-  } catch(e) {}
+  } catch(e) {
+    console.warn('Get secrets error:', e);
+  }
 }
 
 async function persistSecrets() {
@@ -1426,7 +1106,9 @@ async function persistSecrets() {
     });
 
     lastSecretHandId = state.handId;
-  } catch(e) {}
+  } catch(e) {
+    console.warn('Persist secrets error:', e);
+  }
 }
 
 async function loadMyHoleForCurrentHand() {
@@ -1458,7 +1140,9 @@ async function loadMyHoleForCurrentHand() {
       if (!error && data?.cards) {
         myHole = data.cards;
       }
-    } catch(e) {}
+    } catch(e) {
+      console.warn('Load hole error:', e);
+    }
   } else {
     const me = (state.players || []).find(p => p.id === player.id);
     if (me?.hole?.length === 2 && me.hole[0]?.r) {
@@ -1518,7 +1202,7 @@ function onState() {
     $('hostBar').style.display = 'block';
 
     const seatedCount = allSeated(state).length;
-    const withChips = allSeated(state).filter(p => (p.stack || 0) >= roomBB()).length;
+    const withChips = allSeated(state).filter(p => (p.stack || 0) >= BB).length;
 
     $('startHandBtn').textContent = state.handOver || state.phase === 'showdown'
       ? 'НАЧАТЬ НОВУЮ РАЗДАЧУ'
@@ -1536,14 +1220,14 @@ function onState() {
   updateActionsUI();
 
   if (state.handOver || state.phase === 'showdown') {
-    settleMyScoreIfNeeded();
+    settleMyScoreIfNeeded().catch(e => console.warn('Score settle error:', e));
   }
 
   if (state.handId && !state.handOver && !['lobby', 'showdown'].includes(state.phase)) {
     loadMyHoleForCurrentHand().then(() => {
       renderSeats();
       renderBoard();
-    });
+    }).catch(e => console.warn('Load hole error:', e));
   }
 
   if (isHost && state.pendingStreet && !state.handOver && !['lobby', 'showdown'].includes(state.phase) && !advancing) {
@@ -1552,8 +1236,6 @@ function onState() {
       advancing = false;
     });
   }
-
-  try { updateBlindsLabel(); } catch(e) {}
 }
 
 function getPlayerCards(p, isMe) {
@@ -1582,20 +1264,20 @@ function renderBoard() {
   const boardEl = $('board');
   boardEl.innerHTML = '';
 
-  let myBestHand = null;
+  let pBestHand = null;
   const me = (state.players || []).find(p => p.id === player.id);
 
   if (me && !me.folded && state.board && state.board.length > 0) {
     const cards = getPlayerCards(me, true);
     if (cards.length === 2) {
-      myBestHand = bestHand(cards, state.board);
+      pBestHand = bestHand(cards, state.board);
     }
   }
 
   (state.board || []).forEach((c, idx) => {
     let isActive = false;
 
-    if (myBestHand && myBestHand.usedBoard && myBestHand.usedBoard.includes(idx)) {
+    if (pBestHand && pBestHand.usedBoard && pBestHand.usedBoard.includes(idx)) {
       isActive = true;
     }
 
@@ -1664,16 +1346,16 @@ function renderSeats() {
       cards = [null, null];
     }
 
-    let myBestHand = null;
+    let pBestHand = null;
 
     if (showFaces && !p.folded && state.board && state.board.length > 0) {
-      myBestHand = bestHand(cards, state.board);
+      pBestHand = bestHand(cards, state.board);
     }
 
     const cardsHtml = cards.map((c, idx) => {
       let isActive = false;
 
-      if (showFaces && myBestHand && myBestHand.usedHole && myBestHand.usedHole.includes(idx)) {
+      if (showFaces && pBestHand && pBestHand.usedHole && pBestHand.usedHole.includes(idx)) {
         isActive = true;
       }
 
@@ -1696,8 +1378,8 @@ function renderSeats() {
 
     let handNameDisplay = '';
 
-    if (isMe && myBestHand && myBestHand.name !== '—') {
-      handNameDisplay = `<div class="hand-name">${esc(myBestHand.name)}</div>`;
+    if (isMe && pBestHand && pBestHand.name !== '—') {
+      handNameDisplay = `<div class="hand-name">${esc(pBestHand.name)}</div>`;
     } else if ((state.phase === 'showdown' || state.handOver) && !p.folded && p.handName) {
       handNameDisplay = `<div class="hand-name">${esc(p.handName)}</div>`;
     }
@@ -1742,7 +1424,7 @@ function updateActionsUI() {
     const cur = (typeof state.toAct === 'number') ? players[state.toAct] : null;
 
     if (state.pendingStreet) {
-      setStatus('Ожидание дилера…', 'info');
+      setStatus('Ожидание дилера...', 'info');
     } else if (cur) {
       setStatus('Ход: ' + cur.name, 'info');
     } else if (state.dealMsg) {
@@ -1761,7 +1443,7 @@ function updateActionsUI() {
 
   const callAmt = Math.min(toCall, me.stack || 0);
 
-  $('callBtn').innerHTML = `<span>→</span>${callAmt >= (me.stack || 0) && toCall > 0 ? 'Олл-ин ' : 'Колл '}${fmt(callAmt)}`;
+  $('callBtn').innerHTML = `<span>→</span> ${callAmt >= (me.stack || 0) && toCall > 0 ? 'Олл-ин ' : 'Колл '}${fmt(callAmt)}`;
 
   const cap = activeCap();
 
@@ -1779,7 +1461,7 @@ function updateActionsUI() {
   } else {
     $('raiseBtn').disabled = false;
 
-    const minR = currentBet + (state.minRaise || roomBB());
+    const minR = currentBet + (state.minRaise || BB);
 
     const sliderMin = Math.min(minR, maxR);
     const sliderMax = maxR;
@@ -1801,7 +1483,7 @@ function updateActionsUI() {
   setStatus('Ваш ход', 'info');
 }
 
-/* ── Core betting / streets ── */
+// ============ GAME LOGIC ============
 
 function canAct(p) {
   return !!(p && !p.folded && !p.allIn && (p.stack || 0) > 0);
@@ -1832,11 +1514,6 @@ function isRoundComplete() {
   });
 }
 
-function setLastAction(p, type, label) {
-  if (!p) return;
-  p.lastAction = { type, label, ts: Date.now() };
-}
-
 function resetStreetFlags() {
   (state.players || []).forEach(p => {
     p.acted = false;
@@ -1853,7 +1530,7 @@ function collectBetsIntoPot() {
   });
 
   state.currentBet = 0;
-  state.minRaise = roomBB();
+  state.minRaise = BB;
 }
 
 function buildSidePots(players) {
@@ -1952,6 +1629,7 @@ function awardToSingleWinner(winner) {
   state.players.forEach(p => {
     p.hole = [];
     p.holeRevealed = false;
+    p.cardsDealt = false;
   });
 }
 
@@ -1961,7 +1639,7 @@ function firstToActPostflop() {
 
   if (!n) return null;
 
-  const start = (n === 2) ? state.dealerIdx : ((state.dealerIdx + 1) % n);
+  const start = (state.dealerIdx + 1) % n;
 
   for (let i = 0; i < n; i++) {
     const idx = (start + i) % n;
@@ -2012,7 +1690,7 @@ async function finishShowdown() {
     }
   } catch(e) {}
 
-  pushState('lobby');
+  await pushState('lobby');
 }
 
 async function runOutAndShowdown() {
@@ -2050,9 +1728,6 @@ async function advanceStreet() {
   resetStreetFlags();
   state.actionCount = 0;
 
-  // Локально сразу обновить UI улицы (банк собран), сеть — следом
-  onState();
-
   await ensurePrivateSecrets();
 
   if (state.phase === 'preflop') {
@@ -2089,7 +1764,7 @@ async function advanceStreet() {
     if (alive.length === 1) awardToSingleWinner(alive[0]);
     else await finishShowdown();
 
-    pushState('lobby');
+    await pushState('lobby');
     return;
   }
 
@@ -2101,7 +1776,7 @@ async function advanceStreet() {
   }
 
   state.toAct = firstToActPostflop();
-  pushState();
+  await pushState();
 }
 
 async function hostStartHand() {
@@ -2129,7 +1804,9 @@ async function hostStartHand() {
       (data || []).forEach(row => {
         balMap[row.telegram_user_id] = Number(row.total_score || 0);
       });
-    } catch(e) {}
+    } catch(e) {
+      console.warn('Balance load error:', e);
+    }
   }
 
   all.forEach(p => {
@@ -2137,38 +1814,33 @@ async function hostStartHand() {
     p.sittingOut = false;
 
     if (isGuestId(p.id)) {
-      if ((p.stack || 0) < roomBB()) p.stack = Math.max(START_STACK, roomBB() * 50);
+      if ((p.stack || 0) < BB) p.stack = START_STACK;
     } else {
       const bal = balMap[p.id] ?? 0;
 
-      if ((p.stack || 0) < roomBB() && bal >= roomBB()) {
+      if ((p.stack || 0) < BB && bal >= BB) {
         p.stack = bal;
       }
     }
   });
 
-  const active = all.filter(p => (p.stack || 0) >= roomBB());
-  const sitting = all.filter(p => (p.stack || 0) < roomBB());
+  const active = all.filter(p => (p.stack || 0) >= BB);
+  const sitting = all.filter(p => (p.stack || 0) < BB);
 
   if (active.length < 2) {
-    setStatus('Нужно 2+ игрока с фишками ≥ BB (' + fmt(roomBB()) + '). Сделайте ребай.', 'loss');
+    setStatus('Нужно 2+ игрока с фишками ≥ BB. Сделайте ребай.', 'loss');
     return;
   }
 
   const deck = newDeck();
   const handId = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
 
-  let prevDealerId = null;
-
-  if (typeof state.dealerIdx === 'number' && active[state.dealerIdx]) {
-    prevDealerId = active[state.dealerIdx].id;
-  }
-
   let d = 0;
 
+  const prevDealerId = state.dealerId || (state.players?.[state.dealerIdx]?.id ?? null);
   if (prevDealerId) {
-    const prevInHand = active.findIndex(p => p.id === prevDealerId);
-    d = prevInHand >= 0 ? (prevInHand + 1) % active.length : 0;
+    const prevIdx = active.findIndex(p => p.id === prevDealerId);
+    d = prevIdx >= 0 ? (prevIdx + 1) % active.length : 0;
   }
 
   let sbIdx, bbIdx;
@@ -2240,13 +1912,13 @@ async function hostStartHand() {
 
     if (p.stack === 0) p.allIn = true;
 
-    setLastAction(p, 'blind', label + ' ' + fmt(a));
+    p.lastAction = { type: 'blind', label: label + ' ' + fmt(a) };
 
     return a;
   };
 
-  post(sbIdx, roomSB(), 'SB');
-  post(bbIdx, roomBB(), 'BB');
+  post(sbIdx, SB, 'SB');
+  post(bbIdx, BB, 'BB');
 
   const bbPosted = active[bbIdx].bet || 0;
   const sbPosted = active[sbIdx].bet || 0;
@@ -2268,11 +1940,12 @@ async function hostStartHand() {
     pot: 0,
     lastPot: 0,
     dealerIdx: d,
+    dealerId: active[d].id,
     sbIdx,
     bbIdx,
     phase: 'preflop',
     currentBet: streetBet,
-    minRaise: roomBB(),
+    minRaise: BB,
     toAct,
     actionCount: 0,
     handOver: false,
@@ -2285,12 +1958,58 @@ async function hostStartHand() {
 
   await persistSecrets();
 
-  pushState('playing');
+  await pushState('playing');
   setStatus('Префлоп', 'info');
 }
 
+async function settleOnLeave() {
+  if (!sb || !player.id || isGuestId(player.id) || !roomId || String(roomId).startsWith('local')) return;
+
+  try {
+    await sb.rpc('cash_out', { p_user_id: player.id, p_room_id: roomId });
+  } catch(e) {
+    console.warn('Cash out error:', e);
+  }
+}
+
+async function settleMyScoreIfNeeded() {
+  if (!sb || !player.id || isGuestId(player.id) || !state?.handId) return;
+  if (lastSettledHandId === state.handId) return; // уже применено для этой раздачи
+
+  const me = (state.players || []).find(p => p.id === player.id);
+  if (!me) return;
+  if (me.stackAtHandStart == null) return; // sitting out — не участвовал в раздаче
+
+  const delta = (me.stack || 0) - me.stackAtHandStart;
+  if (delta === 0) {
+    lastSettledHandId = state.handId; // зафиксировать даже если нет изменений
+    return;
+  }
+
+  lastSettledHandId = state.handId; // ставим guard ДО вызова RPC
+  try {
+    await sb.rpc('add_score', { p_user_id: player.id, p_delta: delta });
+    balance = Math.max(0, balance + delta);
+    $('balance').textContent = fmt(balance);
+  } catch(e) {
+    lastSettledHandId = null; // откатываем guard — попробуем снова при следующем вызове
+    console.warn('Score settle error:', e);
+  }
+}
+
+async function applyScoreDelta(delta) {
+  if (!sb || !player.id || isGuestId(player.id)) return;
+
+  try {
+    await sb.rpc('add_score', { p_user_id: player.id, p_delta: delta });
+    balance = Math.max(0, balance + delta);
+    $('balance').textContent = fmt(balance);
+  } catch(e) {
+    console.warn('Score apply error:', e);
+  }
+}
+
 async function sendAction(type, raiseTo) {
-  if (actionBusy) return;
   if (!state || state.handOver) return;
   if (state.phase === 'lobby' || state.phase === 'deal' || state.phase === 'showdown') return;
 
@@ -2300,120 +2019,165 @@ async function sendAction(type, raiseTo) {
   if (idx < 0 || idx !== state.toAct) return;
 
   const p = pl[idx];
+
   if (!canAct(p)) return;
 
   const toCall = Math.max(0, (state.currentBet || 0) - (p.bet || 0));
 
-  // Валидация до actionBusy — чтобы не залипали кнопки
-  if (type === 'check' && toCall > 0) return;
-  if (type === 'raise') {
-    const cap = activeCap();
-    let maxTarget = (p.bet || 0) + (p.stack || 0);
-    if (Number.isFinite(cap)) maxTarget = Math.min(maxTarget, cap);
-    const currentBet = state.currentBet || 0;
-    if (maxTarget <= Math.max(currentBet, p.bet || 0)) return;
-  }
-  if (type !== 'fold' && type !== 'check' && type !== 'call' && type !== 'raise') return;
+  if (type === 'fold') {
+    p.folded = true;
+    p.acted = true;
+    p.lastAction = { type: 'fold', label: 'Сброс' };
+  } else if (type === 'check') {
+    if (toCall > 0) return;
 
-  actionBusy = true;
-  try {
+    p.acted = true;
+    p.lastAction = { type: 'check', label: 'Чек' };
+  } else if (type === 'call') {
+    const a = clampBet(toCall, p.stack || 0);
+
+    p.stack = (p.stack || 0) - a;
+    p.bet = (p.bet || 0) + a;
+    p.totalBet = (p.totalBet || 0) + a;
+
+    if (p.stack <= 0) {
+      p.stack = 0;
+      p.allIn = true;
+    }
+
+    p.acted = true;
+
+    p.lastAction = {
+      type: 'call',
+      label: a > 0 ? ((p.allIn ? 'Олл-ин ' : 'Колл ') + fmt(a)) : 'Чек'
+    };
+  } else if (type === 'raise') {
+    const cap = activeCap();
+
+    let maxTarget = (p.bet || 0) + (p.stack || 0);
+
+    if (Number.isFinite(cap)) {
+      maxTarget = Math.min(maxTarget, cap);
+    }
+
+    const currentBet = state.currentBet || 0;
+
+    if (maxTarget <= Math.max(currentBet, p.bet || 0)) return;
+
+    const minTarget = Math.min(currentBet + (state.minRaise || BB), maxTarget);
+
+    let target = Math.floor(Number(raiseTo) || minTarget);
+
+    if (target < minTarget) target = minTarget;
+
+    target = Math.min(Math.max(target, p.bet || 0), maxTarget);
+
+    const need = Math.max(0, target - (p.bet || 0));
+    
+    if (need === 0) return;
+
+    const a = clampBet(need, p.stack || 0);
+
+    p.stack = (p.stack || 0) - a;
+    p.bet = (p.bet || 0) + a;
+    p.totalBet = (p.totalBet || 0) + a;
+
+    if (p.stack <= 0) {
+      p.stack = 0;
+      p.allIn = true;
+    }
+
+    const prevBet = state.currentBet || 0;
+
+    if (p.bet > prevBet) {
+      const raiseSize = p.bet - prevBet;
+      state.currentBet = p.bet;
+
+      const isFullRaise = raiseSize >= (state.minRaise || BB);
+
+      if (isFullRaise) {
+        state.minRaise = raiseSize;
+
+        pl.forEach((x, i) => {
+          if (i !== idx && !x.folded && !x.allIn) x.acted = false;
+        });
+      }
+    }
+
+    p.acted = true;
+
+    p.lastAction = {
+      type: 'raise',
+      label: p.allIn ? ('Олл-ин ' + fmt(p.bet)) : ('Рейз ' + fmt(p.bet))
+    };
+  } else {
+    return;
+  }
+
+  state.actionCount = (state.actionCount || 0) + 1;
+
+  const alive = pl.filter(x => !x.folded);
+
+  if (alive.length === 1) {
+    awardToSingleWinner(alive[0]);
+
     try {
-      $('actions').style.display = 'none';
-      $('raiseRow').style.display = 'none';
+      if (sb && roomId && state.handId && !String(roomId).startsWith('local')) {
+        await sb.rpc('clear_hand_secrets', {
+          p_room_id: roomId,
+          p_hand_id: state.handId
+        });
+      }
     } catch(e) {}
 
-    if (type === 'fold') {
-      p.folded = true;
-      p.acted = true;
-      setLastAction(p, 'fold', 'Сброс');
-    } else if (type === 'check') {
-      p.acted = true;
-      setLastAction(p, 'check', 'Чек');
-    } else if (type === 'call') {
-      const a = clampBet(toCall, p.stack || 0);
-      p.stack = (p.stack || 0) - a;
-      p.bet = (p.bet || 0) + a;
-      p.totalBet = (p.totalBet || 0) + a;
-      if (p.stack <= 0) { p.stack = 0; p.allIn = true; }
-      p.acted = true;
-      setLastAction(p, 'call', a > 0 ? ((p.allIn ? 'Олл-ин ' : 'Колл ') + fmt(a)) : 'Чек');
-    } else if (type === 'raise') {
-      const cap = activeCap();
-      let maxTarget = (p.bet || 0) + (p.stack || 0);
-      if (Number.isFinite(cap)) maxTarget = Math.min(maxTarget, cap);
-      const currentBet = state.currentBet || 0;
-      const minTarget = Math.min(currentBet + (state.minRaise || roomBB()), maxTarget);
-      let target = Math.floor(Number(raiseTo) || minTarget);
-      if (target < minTarget) target = minTarget;
-      target = Math.min(Math.max(target, p.bet || 0), maxTarget);
-      const need = Math.max(0, target - (p.bet || 0));
-      const a = clampBet(need, p.stack || 0);
-      p.stack = (p.stack || 0) - a;
-      p.bet = (p.bet || 0) + a;
-      p.totalBet = (p.totalBet || 0) + a;
-      if (p.stack <= 0) { p.stack = 0; p.allIn = true; }
-      const prevBet = state.currentBet || 0;
-      if (p.bet > prevBet) {
-        const raiseSize = p.bet - prevBet;
-        state.currentBet = p.bet;
-        const isFullRaise = raiseSize >= (state.minRaise || roomBB());
-        if (isFullRaise) {
-          state.minRaise = raiseSize;
-          pl.forEach((x, i) => {
-            if (i !== idx && !x.folded && !x.allIn) x.acted = false;
-          });
-        }
-      }
-      p.acted = true;
-      setLastAction(p, 'raise', p.allIn ? ('Олл-ин ' + fmt(p.bet)) : ('Рейз ' + fmt(p.bet)));
-    }
-
-    state.actionCount = (state.actionCount || 0) + 1;
-    // Мгновенный UI до сети
-    onState();
-
-    const alive = pl.filter(x => !x.folded);
-
-    if (alive.length === 1) {
-      awardToSingleWinner(alive[0]);
-      if (sb && roomId && state.handId && !String(roomId).startsWith('local')) {
-        sb.rpc('clear_hand_secrets', { p_room_id: roomId, p_hand_id: state.handId }).catch(() => {});
-      }
-      await pushState('lobby');
-      return;
-    }
-
-    if (isRoundComplete()) {
-      if (isHost) await advanceStreet();
-      else { state.pendingStreet = true; await pushState(); }
-      return;
-    }
-
-    const n = nextActor(idx);
-    state.toAct = n;
-    state.dealMsg = '';
-
-    if (n === null) {
-      if (isHost) await advanceStreet();
-      else { state.pendingStreet = true; await pushState(); }
-      return;
-    }
-
-    await pushState();
-  } finally {
-    actionBusy = false;
+    await pushState('lobby');
+    return;
   }
+
+  if (isRoundComplete()) {
+    if (isHost) {
+      await advanceStreet();
+    } else {
+      state.pendingStreet = true;
+      await pushState();
+    }
+    return;
+  }
+
+  const n = nextActor(idx);
+  state.toAct = n;
+  state.dealMsg = '';
+
+  if (n === null) {
+    if (isHost) {
+      await advanceStreet();
+    } else {
+      state.pendingStreet = true;
+      await pushState();
+    }
+    return;
+  }
+
+  await pushState();
 }
 
+// ============ EVENT HANDLERS ============
 
 $('createBtn').onclick = createRoom;
 $('joinBtn').onclick = () => joinRoom($('codeInput').value);
 $('refreshBtn').onclick = listRooms;
-$('startHandBtn').onclick = hostStartHand;
-$('foldBtn').onclick = () => { sendAction('fold'); };
-$('checkBtn').onclick = () => { sendAction('check'); };
-$('callBtn').onclick = () => { sendAction('call'); };
-$('raiseBtn').onclick = () => { sendAction('raise', Number($('raiseSlider').value)); };
+$('startHandBtn').onclick = async () => {
+  $('startHandBtn').disabled = true;
+  try {
+    await hostStartHand();
+  } finally {
+    $('startHandBtn').disabled = false;
+  }
+};
+$('foldBtn').onclick = () => sendAction('fold');
+$('checkBtn').onclick = () => sendAction('check');
+$('callBtn').onclick = () => sendAction('call');
+$('raiseBtn').onclick = () => sendAction('raise', Number($('raiseSlider').value));
 
 $('raiseSlider').oninput = () => {
   $('raiseAmt').textContent = fmt($('raiseSlider').value);
@@ -2430,132 +2194,34 @@ $('codeInput').addEventListener('keydown', e => {
   if (e.key === 'Enter') joinRoom($('codeInput').value);
 });
 
-/** Быстрый выход при закрытии Telegram/вкладки (async leave часто не успевает). */
-function emergencyLeaveBeacon() {
-  if (!roomId || !sb || String(roomId).startsWith('local') || leaving) return;
-  try {
-    // помечаем себя left в локальном state и пушим через fetch+keepalive
-    if (state) {
-      const mark = arr => (arr || []).forEach(p => {
-        if (p.id === player.id) {
-          p.left = true;
-          p.folded = true;
-          p.acted = true;
-          p.lastSeen = 0;
-        }
-      });
-      mark(state.players);
-      mark(state.sittingOut);
-      const remaining = allSeated(state);
-      const status = remaining.length ? roomStatusFromState(state) : 'closed';
-      // сеть: без колоды и дыр
-      const net = JSON.parse(JSON.stringify(state));
-      delete net.deck;
-      (net.players || []).forEach(p => { p.hole = []; p.holeRevealed = false; });
-      (net.sittingOut || []).forEach(p => { p.hole = []; p.holeRevealed = false; });
-      if (remaining.length && (!net.hostId || net.hostId === player.id)) {
-        net.hostId = remaining[0].id;
-      }
-      const body = JSON.stringify({
-        state: net,
-        status,
-        updated_at: new Date().toISOString(),
-        ...(remaining.length ? { host_id: net.hostId } : {})
-      });
-      const url = SUPABASE_URL + '/rest/v1/poker_rooms?id=eq.' + encodeURIComponent(roomId);
-      fetch(url, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          'apikey': PROJECT_ANON_KEY,
-          'Authorization': 'Bearer ' + PROJECT_ANON_KEY,
-          'Prefer': 'return=minimal'
-        },
-        body,
-        keepalive: true
-      }).catch(() => {});
-      if (!remaining.length) {
-        fetch(SUPABASE_URL + '/rest/v1/poker_rooms?id=eq.' + encodeURIComponent(roomId), {
-          method: 'DELETE',
-          headers: {
-            'apikey': PROJECT_ANON_KEY,
-            'Authorization': 'Bearer ' + PROJECT_ANON_KEY,
-            'Prefer': 'return=minimal'
-          },
-          keepalive: true
-        }).catch(() => {});
-      }
-    }
-  } catch(e) {}
-  try { leaveRoom({ silent: true }); } catch(e) {}
-}
+window.addEventListener('pagehide', () => {
+  leaveRoom({ silent: true });
+});
 
-window.addEventListener('pagehide', emergencyLeaveBeacon);
-window.addEventListener('beforeunload', emergencyLeaveBeacon);
+window.addEventListener('beforeunload', () => {
+  leaveRoom({ silent: true });
+});
 
-document.addEventListener('visibilitychange', () => {
-  // Не обновляем lastSeen при hidden — иначе «закрыл Telegram» выглядит как онлайн.
-  // При возврате на экран — обновляем lastSeen.
-  if (document.visibilityState === 'visible' && roomId && state && !leaving) {
-    const me = (state.players || []).find(p => p.id === player.id) ||
-               (state.sittingOut || []).find(p => p.id === player.id);
+document.addEventListener('visibilitychange', async () => {
+  if (document.visibilityState === 'hidden' && roomId && state) {
+    const me = (state.players || []).find(p => p.id === player.id);
     if (me) me.lastSeen = Date.now();
+
+    try {
+      if (sb && !String(roomId).startsWith('local')) {
+        await sb.rpc('touch_room', {
+          p_room_id: roomId,
+          p_user_id: player.id
+        });
+      }
+    } catch(e) {}
   }
 });
 
-function updateBlindsLabel() {
-  const sb = roomSB();
-  const bb = roomBB();
-  const el = $('blindsLabel');
-  if (!el) return;
-  const tier = getTier(state && state.tierId);
-  el.textContent = (tier ? tier.emoji + ' ' : '') + 'Блайнды ' + fmt(sb) + ' / ' + fmt(bb);
-}
-
-function renderTierGrid() {
-  const grid = $('tierGrid');
-  if (!grid) return;
-  const bal = Math.floor(Number(balance) || 0);
-  if (!selectedTierId) {
-    const fit = tierForBalance(bal);
-    selectedTierId = fit ? fit.id : ROOM_TIERS[0].id;
-  }
-  grid.innerHTML = ROOM_TIERS.map(tier => {
-    const bl = blindsForTier(tier);
-    const ok = isGuestId(player.id) || canEnterTier(bal, tier);
-    const on = selectedTierId === tier.id;
-    return `<button type="button" class="tier-btn${on ? ' on' : ''}${ok ? '' : ' locked'}" data-tier="${tier.id}" ${ok ? '' : 'disabled'}>
-      <div class="t-name">${tier.emoji} ${esc(tier.name)}${on ? ' · выбрано' : ''}</div>
-      <div class="t-meta">Баланс ${fmt(tier.min)} – ${fmt(tier.max)}<br>Блайнды ${fmt(bl.sb)} / ${fmt(bl.bb)} (BB = 4% порога)</div>
-    </button>`;
-  }).join('');
-  grid.querySelectorAll('.tier-btn:not([disabled])').forEach(btn => {
-    btn.onclick = () => {
-      selectedTierId = btn.dataset.tier;
-      renderTierGrid();
-      updateTierHint();
-    };
-  });
-  updateTierHint();
-}
-
-function updateTierHint() {
-  const hint = $('tierHint');
-  if (!hint) return;
-  const bal = Math.floor(Number(balance) || 0);
-  let tier = getTier(selectedTierId) || tierForBalance(bal);
-  if (!canEnterTier(bal, tier) && !isGuestId(player.id)) {
-    tier = tierForBalance(bal);
-    selectedTierId = tier.id;
-  }
-  const bl = blindsForTier(tier);
-  hint.textContent = 'Ваш баланс ' + fmt(bal) + ' · стол: ' + tier.emoji + ' ' + tier.name +
-    ' · блайнды ' + fmt(bl.sb) + '/' + fmt(bl.bb);
-}
-
 resolvePlayer();
 loadHat();
-loadBalance().then(() => { renderTierGrid(); listRooms(); });
+loadBalance();
+listRooms();
 </script>
 </body>
 </html>
