@@ -18,6 +18,9 @@
   --gold-grad:linear-gradient(135deg,#eef0f3 0%,#d8dce2 48%,#c3c8d1 100%);
   --r-lg:20px;--r-md:16px;--r-sm:12px;
   --font:'Manrope',-apple-system,'SF Pro Text',system-ui,sans-serif;
+  /* осенний фон — дефолты, если тема не проставлена */
+  --leaf-1:#c9752a;--leaf-2:#a8452b;--leaf-3:#c9a03a;--leaf-4:#7d5433;
+  --leaf-vein:rgba(0,0,0,.25);--leaf-op:.6;--leaf-filter:none;--leaf-ambient:none;
 }
 html[data-theme="light"]{
   --bg:#f5f5f7;--text:#1d1d1f;--muted:#6e6e73;
@@ -26,6 +29,10 @@ html[data-theme="light"]{
   --hi:rgba(255,255,255,.9);--shadow:0 10px 28px rgba(0,0,0,.06);
   --gold:#0a84ff;--gold-soft:rgba(10,132,255,.10);--gold-border:rgba(10,132,255,.28);
   --sheet-bg:rgba(255,255,255,.92);
+  /* осенние листья · светлая тема */
+  --leaf-1:#e08a2b;--leaf-2:#c4552a;--leaf-3:#b5891f;--leaf-4:#8a5a2b;
+  --leaf-vein:rgba(0,0,0,.16);--leaf-op:.72;--leaf-filter:saturate(1.05);
+  --leaf-ambient:radial-gradient(120% 75% at 50% -8%,rgba(224,138,43,.14),transparent 62%);
   --danger:#ff3b30;--ok:#34c759;
   --day-free-border:rgba(52,199,89,.45);--day-free-bg:rgba(52,199,89,.08);
   --day-one-border:rgba(10,132,255,.45);--day-one-bg:rgba(10,132,255,.08);
@@ -38,6 +45,10 @@ html[data-theme="dark"]{
   --hi:rgba(255,255,255,.06);--shadow:0 10px 28px rgba(0,0,0,.5);
   --gold:#0a84ff;--gold-soft:rgba(10,132,255,.14);--gold-border:rgba(10,132,255,.35);
   --sheet-bg:rgba(22,22,24,.92);
+  /* осенние листья · тёмная тема */
+  --leaf-1:#c9752a;--leaf-2:#a8452b;--leaf-3:#c9a03a;--leaf-4:#7d5433;
+  --leaf-vein:rgba(0,0,0,.3);--leaf-op:.5;--leaf-filter:saturate(.85) brightness(.92);
+  --leaf-ambient:radial-gradient(120% 75% at 50% -8%,rgba(201,117,42,.2),transparent 62%);
   --danger:#ff453a;--ok:#30d158;
   --day-free-border:rgba(48,209,88,.5);--day-free-bg:rgba(48,209,88,.1);
   --day-one-border:rgba(10,132,255,.5);--day-one-bg:rgba(10,132,255,.12);
@@ -49,6 +60,31 @@ button{font-family:var(--font);color:inherit;touch-action:manipulation}
 ::-webkit-scrollbar{width:0;height:0}
 
 .glass{background:var(--surface);-webkit-backdrop-filter:blur(20px) saturate(150%);backdrop-filter:blur(20px) saturate(150%);border:1px solid var(--stroke);box-shadow:var(--shadow),inset 0 1px 0 var(--hi);border-radius:var(--r-lg)}
+
+/* ============================================================
+   ОСЕННИЙ ФОН — падающие листья.
+   Одна и та же анимация; под тему меняются только цвета и
+   прозрачность (переменные --leaf-* в блоках html[data-theme]).
+   Быстрые настройки:
+     --leaf-1..4   цвета листьев
+     --leaf-op     общая плотность (0 = невидимо, 1 = максимум)
+     --leaf-filter коррекция под тему (яркость/насыщенность)
+     --leaf-ambient тёплый оттенок под листьями
+   ============================================================ */
+.leaves{position:fixed;inset:0;max-width:560px;margin:0 auto;overflow:hidden;pointer-events:none;z-index:0;contain:layout paint;background:var(--leaf-ambient);filter:var(--leaf-filter)}
+.leaf{position:absolute;top:0;display:block;animation:leafFall var(--dur) linear var(--del) infinite;will-change:transform;transform:translateZ(0)}
+.leaf i{position:relative;display:block;width:100%;height:100%;background:var(--c);border-radius:0 100% 0 100%;opacity:calc(var(--leaf-op) * var(--op));box-shadow:inset -1px -1px 2px rgba(0,0,0,.14);animation:leafSway calc(var(--dur) / 3.2) ease-in-out var(--del) infinite alternate}
+.leaf i::after{content:'';position:absolute;left:8%;top:8%;width:86%;height:1px;background:var(--leaf-vein);border-radius:1px;transform:rotate(45deg);transform-origin:left center}
+@keyframes leafFall{
+  0%{transform:translate3d(0,-14vh,0) rotate(0deg)}
+  100%{transform:translate3d(0,114vh,0) rotate(var(--rot))}
+}
+@keyframes leafSway{
+  0%{transform:translateX(calc(var(--sw) * -1)) rotate(-28deg)}
+  100%{transform:translateX(var(--sw)) rotate(28deg)}
+}
+/* уважаем «уменьшить движение»: слой убираем совсем */
+@media (prefers-reduced-motion:reduce){.leaves{display:none !important}}
 
 /* buttons */
 .btn{border:0;border-radius:16px;padding:14px 18px;font-weight:800;font-size:15px;cursor:pointer;transition:transform .15s,box-shadow .2s,opacity .2s}
@@ -172,6 +208,9 @@ button{font-family:var(--font);color:inherit;touch-action:manipulation}
     background:var(--sheet-bg) !important;
   }
   .bd{backdrop-filter:none !important;-webkit-backdrop-filter:none !important;background:rgba(0,0,0,.5) !important}
+  /* чтобы листья были видны за карточками: без блюра, но полупрозрачно.
+     Если контраст текста не нравится — просто удалите эту строку. */
+  .cal-card.glass,.up-row.glass,.empty.glass{background:var(--surface) !important}
   .cal-cell,.up-row,.chip-day{
     transition:transform .12s ease,border-color .12s ease !important;
   }
@@ -182,6 +221,9 @@ button{font-family:var(--font);color:inherit;touch-action:manipulation}
 </style>
 </head>
 <body>
+<!-- Осенний фон: падающие листья (генерируется скриптом ниже) -->
+<div class="leaves" id="leaves" aria-hidden="true"></div>
+
 <main class="app" style="position:relative;z-index:1;max-width:560px;margin:0 auto;padding:14px 8px calc(60px + env(safe-area-inset-bottom));width:100%;overflow-x:hidden">
   <section id="sc-calendar" class="screen active" style="display:block">
     <div class="cal-card glass">
@@ -430,6 +472,42 @@ window.addEventListener('message',e=>{
 /* ---- skeleton на старте, пока данные не пришли ---- */
 $('#calGrid').innerHTML=Array(35).fill('<div class="sk" style="height:52px;border-radius:14px"></div>').join('');
 $('#upList').innerHTML='<div class="sk" style="height:64px;border-radius:20px"></div>'.repeat(2);
+
+/* ============================================================
+   ОСЕННИЕ ЛИСТЬЯ — раскидываем листья по слою фона.
+   Одна анимация для обеих тем: цвет/прозрачность берутся из
+   CSS-переменных --leaf-*, поэтому переключение темы мгновенное.
+   Хочешь гуще/реже — поменяй LEAF_COUNT / LEAF_COUNT_MOBILE.
+   ============================================================ */
+const LEAF_COUNT = 22;        // десктоп
+const LEAF_COUNT_MOBILE = 12; // телефоны (меньше нагрузки)
+function initLeaves(){
+  const box = document.getElementById('leaves');
+  if(!box) return;
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){ box.remove(); return; }
+  const mobile = window.matchMedia('(max-width:700px)').matches;
+  const count = mobile ? LEAF_COUNT_MOBILE : LEAF_COUNT;
+  let html='';
+  for(let i=0;i<count;i++){
+    const left = Math.random()*100;                  // % по горизонтали
+    const size = 10 + Math.random()*13;              // 10–23 px
+    const dur  = 9 + Math.random()*9;                // 9–18 c на круг
+    const del  = -Math.random()*dur;                 // отрицательная задержка: листья уже в полёте
+    const sway = 8 + Math.random()*30;               // амплитуда качания, px
+    const rot  = 180 + Math.random()*540;            // сколько оборотов за падение
+    const ci   = 1 + Math.floor(Math.random()*4);    // --leaf-1..4
+    const op   = (0.6 + Math.random()*0.4).toFixed(2); // лёгкий разброс плотности
+    html += '<span class="leaf" style="'
+      + 'left:'+left.toFixed(2)+'%;'
+      + 'width:'+size.toFixed(1)+'px;height:'+size.toFixed(1)+'px;'
+      + '--c:var(--leaf-'+ci+');--op:'+op+';'
+      + '--sw:'+sway.toFixed(1)+'px;--rot:'+rot.toFixed(0)+'deg;'
+      + '--dur:'+dur.toFixed(2)+'s;--del:'+del.toFixed(2)+'s'
+      + '"><i></i></span>';
+  }
+  box.innerHTML = html;
+}
+initLeaves();
 
 /* ---- Сообщаем родителю, что iframe готов ---- */
 sendToParent({ type:'petzker-cal-ready' });
