@@ -18,8 +18,13 @@
   --gold-grad:linear-gradient(135deg,#eef0f3 0%,#d8dce2 48%,#c3c8d1 100%);
   --r-lg:20px;--r-md:16px;--r-sm:12px;
   --font:'Manrope',-apple-system,'SF Pro Text',system-ui,sans-serif;
-  /* осенний фон — дефолты, если тема не проставлена */
-  --leaf-1:#c9752a;--leaf-2:#a8452b;--leaf-3:#c9a03a;--leaf-4:#7d5433;
+  /* осенний фон — дефолты, если тема ещё не проставлена */
+  --maple-1:#c9762a;--maple-2:#b0551f;--maple-3:#8f3f18;--maple-4:#6d2f14;
+  --oak-1:#a8842c;--oak-2:#8a6a22;--oak-3:#6a501b;--oak-4:#4c3914;
+  --birch-1:#cbb44c;--birch-2:#b39c3a;--birch-3:#8f7c2b;--birch-4:#6d5e21;
+  --trunk:#3a2a1c;--trunk-2:#241a12;--bark:#d8d2c4;--bark-2:#161310;
+  --ground-1:rgba(201,117,42,.12);--ground-2:rgba(60,38,18,.45);
+  --tree-glow:none;
   --leaf-vein:rgba(0,0,0,.25);--leaf-op:.6;--leaf-filter:none;--leaf-ambient:none;
 }
 html[data-theme="light"]{
@@ -29,9 +34,14 @@ html[data-theme="light"]{
   --hi:rgba(255,255,255,.9);--shadow:0 10px 28px rgba(0,0,0,.06);
   --gold:#0a84ff;--gold-soft:rgba(10,132,255,.10);--gold-border:rgba(10,132,255,.28);
   --sheet-bg:rgba(255,255,255,.92);
-  /* осенние листья · светлая тема */
-  --leaf-1:#e08a2b;--leaf-2:#c4552a;--leaf-3:#b5891f;--leaf-4:#8a5a2b;
-  --leaf-vein:rgba(0,0,0,.16);--leaf-op:.72;--leaf-filter:saturate(1.05);
+  /* осенняя сцена · светлая тема */
+  --maple-1:#f0a94a;--maple-2:#e2822a;--maple-3:#c9531f;--maple-4:#9e3a19;
+  --oak-1:#d9b756;--oak-2:#b98f2c;--oak-3:#8f6420;--oak-4:#6b4a1c;
+  --birch-1:#f2e07a;--birch-2:#e0c845;--birch-3:#c2a832;--birch-4:#9c8526;
+  --trunk:#7a5433;--trunk-2:#5b3c22;--bark:#e9e2d1;--bark-2:#3b3129;
+  --ground-1:rgba(224,138,43,.20);--ground-2:rgba(122,84,51,.34);
+  --tree-glow:none;
+  --leaf-vein:rgba(0,0,0,.16);--leaf-op:.78;--leaf-filter:saturate(1.05);
   --leaf-ambient:radial-gradient(120% 75% at 50% -8%,rgba(224,138,43,.14),transparent 62%);
   --danger:#ff3b30;--ok:#34c759;
   --day-free-border:rgba(52,199,89,.45);--day-free-bg:rgba(52,199,89,.08);
@@ -45,9 +55,14 @@ html[data-theme="dark"]{
   --hi:rgba(255,255,255,.06);--shadow:0 10px 28px rgba(0,0,0,.5);
   --gold:#0a84ff;--gold-soft:rgba(10,132,255,.14);--gold-border:rgba(10,132,255,.35);
   --sheet-bg:rgba(22,22,24,.92);
-  /* осенние листья · тёмная тема */
-  --leaf-1:#c9752a;--leaf-2:#a8452b;--leaf-3:#c9a03a;--leaf-4:#7d5433;
-  --leaf-vein:rgba(0,0,0,.3);--leaf-op:.5;--leaf-filter:saturate(.85) brightness(.92);
+  /* осенняя сцена · тёмная тема */
+  --maple-1:#d4812f;--maple-2:#bd5f22;--maple-3:#9a471b;--maple-4:#733417;
+  --oak-1:#b8922f;--oak-2:#98762a;--oak-3:#75581f;--oak-4:#543f17;
+  --birch-1:#dcc45a;--birch-2:#c2a944;--birch-3:#9c8632;--birch-4:#776625;
+  --trunk:#3a2a1c;--trunk-2:#241a12;--bark:#d8d2c4;--bark-2:#161310;
+  --ground-1:rgba(201,117,42,.12);--ground-2:rgba(60,38,18,.45);
+  --tree-glow:drop-shadow(0 0 26px rgba(201,117,42,.18));
+  --leaf-vein:rgba(0,0,0,.3);--leaf-op:.66;--leaf-filter:saturate(.95) brightness(.98);
   --leaf-ambient:radial-gradient(120% 75% at 50% -8%,rgba(201,117,42,.2),transparent 62%);
   --danger:#ff453a;--ok:#30d158;
   --day-free-border:rgba(48,209,88,.5);--day-free-bg:rgba(48,209,88,.1);
@@ -62,28 +77,43 @@ button{font-family:var(--font);color:inherit;touch-action:manipulation}
 .glass{background:var(--surface);-webkit-backdrop-filter:blur(20px) saturate(150%);backdrop-filter:blur(20px) saturate(150%);border:1px solid var(--stroke);box-shadow:var(--shadow),inset 0 1px 0 var(--hi);border-radius:var(--r-lg)}
 
 /* ============================================================
-   ОСЕННИЙ ФОН — падающие листья.
-   Одна и та же анимация; под тему меняются только цвета и
-   прозрачность (переменные --leaf-* в блоках html[data-theme]).
-   Быстрые настройки:
-     --leaf-1..4   цвета листьев
-     --leaf-op     общая плотность (0 = невидимо, 1 = максимум)
-     --leaf-filter коррекция под тему (яркость/насыщенность)
-     --leaf-ambient тёплый оттенок под листьями
+   ОСЕННЯЯ СЦЕНА — деревья (клён, дуб, берёза) + падающие листья.
+   Всё рисуется SVG/CSS: ни картинок, ни внешних файлов.
+   Настройки:
+     --maple-1..4 / --oak-1..4 / --birch-1..4  цвета кроны и листьев
+     --trunk / --trunk-2 / --bark / --bark-2    стволы (--bark = берёза)
+     --ground-1/2                               «земля» под деревьями
+     --leaf-op, --leaf-filter, --leaf-ambient    плотность и тон фона
+     --tree-glow                                свечение крон (тёмная тема)
+   Кол-во листьев — LEAF_COUNT / LEAF_COUNT_MOBILE в скрипте,
+   состав леса — TREE_LAYOUT.
    ============================================================ */
-.leaves{position:fixed;inset:0;max-width:560px;margin:0 auto;overflow:hidden;pointer-events:none;z-index:0;contain:layout paint;background:var(--leaf-ambient);filter:var(--leaf-filter)}
-.leaf{position:absolute;top:0;display:block;animation:leafFall var(--dur) linear var(--del) infinite;will-change:transform;transform:translateZ(0)}
-.leaf i{position:relative;display:block;width:100%;height:100%;background:var(--c);border-radius:0 100% 0 100%;opacity:calc(var(--leaf-op) * var(--op));box-shadow:inset -1px -1px 2px rgba(0,0,0,.14);animation:leafSway calc(var(--dur) / 3.2) ease-in-out var(--del) infinite alternate}
-.leaf i::after{content:'';position:absolute;left:8%;top:8%;width:86%;height:1px;background:var(--leaf-vein);border-radius:1px;transform:rotate(45deg);transform-origin:left center}
+.scene{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0;contain:layout paint;background:var(--leaf-ambient);filter:var(--leaf-filter)}
+.trees{position:absolute;inset:0;overflow:hidden}
+.trees.far{filter:blur(3px) saturate(.85);opacity:.5}
+.trees.mid{filter:blur(1.2px);opacity:.75}
+.trees.near{filter:var(--tree-glow);opacity:.96}
+.tree{position:absolute;left:var(--x);bottom:var(--b);height:var(--h);width:calc(var(--h) * 0.625);transform:translateX(-50%)}
+.tree svg{display:block;width:100%;height:100%;overflow:visible}
+.ground{position:absolute;left:0;right:0;bottom:0;height:20vh;background:linear-gradient(180deg,transparent,var(--ground-1) 45%,var(--ground-2))}
+.leaves{position:absolute;inset:0;overflow:hidden}
+.leaf{position:absolute;top:0;display:block;animation:leafFall var(--dur) linear var(--del) infinite;will-change:transform}
+.leaf.fade{animation:leafFall var(--dur) linear var(--del) infinite,leafFade var(--dur) linear var(--del) infinite}
+.leaf i{position:relative;display:block;width:100%;height:100%;opacity:calc(var(--leaf-op) * var(--op));animation:leafSway calc(var(--dur) / 3.2) ease-in-out var(--del) infinite alternate}
+.leaf.fg i{filter:blur(.7px)}
+.leaf svg{display:block;width:100%;height:100%}
+.leaf svg path{fill:var(--leaf-c)}
+.leaf svg path.v{fill:none;stroke:var(--leaf-vein);stroke-width:2.4;stroke-linecap:round}
 @keyframes leafFall{
-  0%{transform:translate3d(0,-14vh,0) rotate(0deg)}
+  0%{transform:translate3d(0,var(--from,-16vh),0) rotate(0deg)}
   100%{transform:translate3d(0,114vh,0) rotate(var(--rot))}
 }
 @keyframes leafSway{
   0%{transform:translateX(calc(var(--sw) * -1)) rotate(-28deg)}
   100%{transform:translateX(var(--sw)) rotate(28deg)}
 }
-/* уважаем «уменьшить движение»: слой убираем совсем */
+@keyframes leafFade{0%{opacity:0}6%{opacity:1}100%{opacity:1}}
+/* «уменьшить движение»: убираем только падение, деревья остаются */
 @media (prefers-reduced-motion:reduce){.leaves{display:none !important}}
 
 /* buttons */
@@ -208,9 +238,14 @@ button{font-family:var(--font);color:inherit;touch-action:manipulation}
     background:var(--sheet-bg) !important;
   }
   .bd{backdrop-filter:none !important;-webkit-backdrop-filter:none !important;background:rgba(0,0,0,.5) !important}
-  /* чтобы листья были видны за карточками: без блюра, но полупрозрачно.
+  /* чтобы сцена была видна за карточками: без блюра, но полупрозрачно.
      Если контраст текста не нравится — просто удалите эту строку. */
   .cal-card.glass,.up-row.glass,.empty.glass{background:var(--surface) !important}
+  /* на телефонах блюр дальних планов выключаем (как и backdrop-filter) */
+  .trees.far,.trees.mid{filter:none !important}
+  .trees.far{opacity:.42}
+  .trees.mid{opacity:.62}
+  .leaf.fg i{filter:none !important}
   .cal-cell,.up-row,.chip-day{
     transition:transform .12s ease,border-color .12s ease !important;
   }
@@ -221,8 +256,14 @@ button{font-family:var(--font);color:inherit;touch-action:manipulation}
 </style>
 </head>
 <body>
-<!-- Осенний фон: падающие листья (генерируется скриптом ниже) -->
-<div class="leaves" id="leaves" aria-hidden="true"></div>
+<!-- Осенняя сцена: лес (клён/дуб/берёза) + падающие листья. Рисуется скриптом внизу файла. -->
+<div class="scene" aria-hidden="true">
+  <div class="trees far" id="treesFar"></div>
+  <div class="ground"></div>
+  <div class="trees mid" id="treesMid"></div>
+  <div class="trees near" id="treesNear"></div>
+  <div class="leaves" id="leaves"></div>
+</div>
 
 <main class="app" style="position:relative;z-index:1;max-width:560px;margin:0 auto;padding:14px 8px calc(60px + env(safe-area-inset-bottom));width:100%;overflow-x:hidden">
   <section id="sc-calendar" class="screen active" style="display:block">
@@ -474,39 +515,221 @@ $('#calGrid').innerHTML=Array(35).fill('<div class="sk" style="height:52px;borde
 $('#upList').innerHTML='<div class="sk" style="height:64px;border-radius:20px"></div>'.repeat(2);
 
 /* ============================================================
-   ОСЕННИЕ ЛИСТЬЯ — раскидываем листья по слою фона.
-   Одна анимация для обеих тем: цвет/прозрачность берутся из
-   CSS-переменных --leaf-*, поэтому переключение темы мгновенное.
-   Хочешь гуще/реже — поменяй LEAF_COUNT / LEAF_COUNT_MOBILE.
+   ОСЕННЯЯ СЦЕНА — генерация леса и листопада.
+   Деревья: клён (круглая крона), дуб (широкая тяжёлая крона),
+   берёза (тонкий белый ствол, узкая «плакучая» крона).
+   Крона собирается из «кучек» шариков — так она выглядит пышной.
+   Переключение темы мгновенное: цвета берутся из CSS-переменных.
    ============================================================ */
-const LEAF_COUNT = 22;        // десктоп
-const LEAF_COUNT_MOBILE = 12; // телефоны (меньше нагрузки)
+const LEAF_COUNT = 48;         // десктоп
+const LEAF_COUNT_MOBILE = 26;  // телефоны (меньше нагрузки)
+
+const R = (a,b)=>a+Math.random()*(b-a);
+const pick = arr=>arr[Math.floor(Math.random()*arr.length)];
+
+/* ---------- формы листьев (SVG-бокс 0 0 100 100) ---------- */
+function mapleLeaf(){
+  // пять лопастей веером из одной точки: низ-право, верх-право, верх, верх-лево, низ-лево
+  const cx=50, cy=78;
+  const P=(a,r)=>[(cx+Math.sin(a*Math.PI/180)*r).toFixed(1),(cy-Math.cos(a*Math.PI/180)*r).toFixed(1)];
+  const seq=[[108,48],[78,33],[48,56],[24,36],[0,62],[-24,36],[-48,56],[-78,33],[-108,48]];
+  let d='M'+P(seq[0][0],seq[0][1]).join(' ');
+  for(let i=1;i<seq.length;i++) d+=' L'+P(seq[i][0],seq[i][1]).join(' ');
+  d+=' L54 86 L50 96 L46 86 Z';
+  let v='M50 78 L50 95';                                   // черешок
+  [[0,62],[48,56],[-48,56],[108,48],[-108,48]].forEach(l=>{ v+=' M50 78 L'+P(l[0],l[1]).join(' '); });
+  return {d:d, v:v};
+}
+const MAPLE = mapleLeaf();
+const LEAF_KINDS = {
+  maple:{
+    tones:['--maple-1','--maple-2','--maple-3','--maple-4'],
+    d:MAPLE.d,
+    v:MAPLE.v,
+    size:[13,25]
+  },
+  oak:{
+    tones:['--oak-1','--oak-2','--oak-3','--oak-4'],
+    d:'M50 6 C58 14 62 20 62 27 C74 24 81 33 75 41 C86 45 86 58 73 60 C81 68 77 80 64 80 C64 90 55 96 50 99 C45 96 36 90 36 80 C23 80 19 68 27 60 C14 58 14 45 25 41 C19 33 26 24 38 27 C38 20 42 14 50 6 Z',
+    v:'M50 14 L50 94 M50 34 L33 44 M50 34 L67 44 M50 56 L30 64 M50 56 L70 64 M50 74 L38 80 M50 74 L62 80',
+    size:[14,27]
+  },
+  birch:{
+    tones:['--birch-1','--birch-2','--birch-3','--birch-4'],
+    d:'M50 4 C57 13 63 23 66 35 C71 54 68 77 50 98 C32 77 29 54 34 35 C37 23 43 13 50 4 Z',
+    v:'M50 12 L50 94 M50 32 L34 41 M50 32 L66 41 M50 52 L32 60 M50 52 L68 60 M50 72 L40 80 M50 72 L60 80',
+    size:[11,19]
+  }
+};
+const KIND_KEYS = Object.keys(LEAF_KINDS);
+
+/* ---------- породы деревьев (SVG-бокс 0 0 200 320) ---------- */
+const TREES = {
+  maple:{
+    tones:['--maple-4','--maple-3','--maple-2','--maple-1'], // низ кроны → верх: тёмное → светлое
+    canopy:{cx:100,cy:98,rx:80,ry:64,rmin:13,rmax:25},
+    clusters:[12,16],
+    trunk:'M86 320 C88 258 92 220 94 190 L97 138 L105 138 L108 190 C111 222 115 258 117 320 Z',
+    branches:[[101,196,64,146,8],[101,188,140,138,7],[103,224,148,192,6]]
+  },
+  oak:{
+    tones:['--oak-4','--oak-3','--oak-2','--oak-1'],
+    canopy:{cx:100,cy:102,rx:90,ry:68,rmin:14,rmax:27},
+    clusters:[13,17],
+    trunk:'M78 320 C82 262 88 226 92 196 L96 148 L106 148 L110 196 C114 226 120 262 124 320 Z',
+    branches:[[101,200,52,152,11],[101,192,152,146,10],[103,230,158,202,8],[100,242,44,206,7]]
+  },
+  birch:{
+    tones:['--birch-4','--birch-3','--birch-2','--birch-1'],
+    canopy:{cx:100,cy:92,rx:48,ry:84,rmin:9,rmax:17},
+    clusters:[15,20],
+    taper:.55,           // крона уже сверху, шире снизу — «плакучая» форма
+    trunk:'M94 320 C96 250 98 200 99 158 L101 88 L106 88 L107 158 C108 200 110 250 112 320 Z',
+    trunkFill:'--bark',
+    bark:true,
+    droop:true,          // ниспадающие веточки
+    branches:[[102,180,74,132,5],[102,166,130,116,5],[102,214,80,192,4],[102,206,126,182,4]]
+  }
+};
+
+/* ---------- одно дерево в SVG ---------- */
+function treeSVG(kind){
+  const s = TREES[kind], c = s.canopy;
+  let g='';
+  // ветки — под стволом, чтобы не торчали из него
+  s.branches.forEach(b=>{
+    g+='<path d="M'+b[0]+' '+b[1]+' L'+b[2]+' '+b[3]+'" stroke="var(--trunk-2)" stroke-width="'+b[4]+'" stroke-linecap="round" fill="none"/>';
+  });
+  // ствол (берёзе — тонкий тёмный контур, иначе белый ствол пропадает на светлом фоне)
+  g+='<path d="'+s.trunk+'" fill="var('+(s.trunkFill||'--trunk')+')"'+
+     (s.bark?' stroke="var(--bark-2)" stroke-opacity=".45" stroke-width="3" stroke-linejoin="round"':'')+'/>';
+  // берёзовые «чёрточки» на коре
+  if(s.bark){
+    for(let i=0;i<6;i++){
+      g+='<ellipse cx="'+(102+R(-3,3)).toFixed(1)+'" cy="'+R(168,306).toFixed(1)+'" rx="'+R(2.5,6).toFixed(1)+'" ry="2" fill="var(--bark-2)" opacity=".6"/>';
+    }
+  }
+  // крона: кучки шариков, тон зависит от высоты (сверху светлее — как будто на солнце, снизу темнее)
+  const clusters = Math.round(R(s.clusters[0],s.clusters[1]));
+  for(let k=0;k<clusters;k++){
+    const a=Math.random()*Math.PI*2, rr=Math.sqrt(Math.random());
+    const ny=Math.sin(a)*rr, nx=Math.cos(a)*rr;
+    const cyy=c.cy+ny*c.ry*.64;
+    const ty=Math.min(1,Math.max(0,(cyy-(c.cy-c.ry))/(2*c.ry)));   // 0 = верх кроны, 1 = низ
+    const lw=c.rx*(1-(s.taper||0)*(1-ty));                        // сужение кроны кверху
+    const cxx=c.cx+nx*lw*.9;
+    const n=3+Math.floor(Math.random()*3);
+    for(let i=0;i<n;i++){
+      const x=cxx+R(-1,1)*lw*.3, y=cyy+R(-1,1)*c.ry*.3;
+      const t=Math.min(1,Math.max(0,(c.cy+c.ry*.55-y)/(c.ry*1.25)));
+      const idx=Math.min(3,Math.max(0,Math.round(t*3+R(-.45,.45))));
+      g+='<circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="'+R(c.rmin,c.rmax).toFixed(1)+'" fill="var('+s.tones[idx]+')"/>';
+    }
+  }
+  // ниспадающие веточки берёзы — поверх кроны, держим их внутри её суженного контура
+  if(s.droop){
+    for(let i=0;i<6;i++){
+      const ty0=R(.35,.85);                       // где висит веточка: 0 = верх кроны, 1 = низ
+      const y0=c.cy+(ty0-.5)*c.ry;
+      const lw=c.rx*(1-(s.taper||0)*(1-ty0));
+      const x0=c.cx+R(-1,1)*lw*.55;
+      const len=R(.25,.5)*c.ry, lean=R(-10,10);
+      for(let k=1;k<=4;k++){
+        const t=k/4;
+        g+='<circle cx="'+(x0+lean*t).toFixed(1)+'" cy="'+(y0+len*t).toFixed(1)+'" r="'+R(6,12).toFixed(1)+'" fill="var('+s.tones[Math.min(3,2+(k>2?1:0))]+')"/>';
+      }
+    }
+  }
+  return '<svg viewBox="0 0 200 320" xmlns="http://www.w3.org/2000/svg">'+g+'</svg>';
+}
+
+/* ---------- состав леса: три плана глубины ---------- */
+const TREE_LAYOUT = [
+  // дальний план — размытый, задаёт глубину
+  {k:'oak',   x:5,   h:34, b:12, z:'far'},
+  {k:'birch', x:22,  h:38, b:12, z:'far'},
+  {k:'maple', x:47,  h:32, b:12, z:'far'},
+  {k:'oak',   x:74,  h:36, b:12, z:'far'},
+  {k:'birch', x:93,  h:40, b:12, z:'far'},
+  // средний план
+  {k:'maple', x:16,  h:50, b:9,  z:'mid'},
+  {k:'oak',   x:50,  h:44, b:9,  z:'mid'},
+  {k:'birch', x:80,  h:58, b:9,  z:'mid'},
+  // ближний план — по краям, кроны заходят в кадр
+  {k:'oak',   x:-3,  h:66, b:5,  z:'near'},
+  {k:'birch', x:103, h:74, b:5,  z:'near'}
+];
+
+function buildTrees(){
+  const layers={far:document.getElementById('treesFar'),mid:document.getElementById('treesMid'),near:document.getElementById('treesNear')};
+  TREE_LAYOUT.forEach(t=>{
+    const box=layers[t.z]; if(!box) return;
+    const el=document.createElement('div');
+    el.className='tree';
+    el.dataset.kind=t.k;
+    el.style.setProperty('--x',(t.x+R(-2,2)).toFixed(1)+'%');
+    el.style.setProperty('--h',(t.h*R(.94,1.06)).toFixed(1)+'vh');
+    el.style.setProperty('--b',t.b.toFixed(1)+'vh');
+    el.innerHTML=treeSVG(t.k);
+    box.appendChild(el);
+  });
+}
+
+/* ---------- точки вылета листьев: кроны среднего и ближнего плана ---------- */
+function collectEmitters(){
+  const W=window.innerWidth, H=window.innerHeight, out=[];
+  document.querySelectorAll('#treesMid .tree, #treesNear .tree').forEach(el=>{
+    const r=el.getBoundingClientRect();
+    if(!r.width) return;
+    out.push({
+      kind:el.dataset.kind,
+      x:(r.left+r.width*.5)/W*100,      // центр кроны, % ширины
+      spread:r.width*.40/W*100,          // полуширина кроны, %
+      top:(r.top+r.height*.30)/H*100     // уровень кроны, vh
+    });
+  });
+  return out;
+}
+
 function initLeaves(){
-  const box = document.getElementById('leaves');
+  const box=document.getElementById('leaves');
   if(!box) return;
   if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){ box.remove(); return; }
-  const mobile = window.matchMedia('(max-width:700px)').matches;
-  const count = mobile ? LEAF_COUNT_MOBILE : LEAF_COUNT;
+  const mobile=window.matchMedia('(max-width:700px)').matches;
+  const count=mobile?LEAF_COUNT_MOBILE:LEAF_COUNT;
+  const emitters=collectEmitters();
   let html='';
   for(let i=0;i<count;i++){
-    const left = Math.random()*100;                  // % по горизонтали
-    const size = 10 + Math.random()*13;              // 10–23 px
-    const dur  = 9 + Math.random()*9;                // 9–18 c на круг
-    const del  = -Math.random()*dur;                 // отрицательная задержка: листья уже в полёте
-    const sway = 8 + Math.random()*30;               // амплитуда качания, px
-    const rot  = 180 + Math.random()*540;            // сколько оборотов за падение
-    const ci   = 1 + Math.floor(Math.random()*4);    // --leaf-1..4
-    const op   = (0.6 + Math.random()*0.4).toFixed(2); // лёгкий разброс плотности
-    html += '<span class="leaf" style="'
-      + 'left:'+left.toFixed(2)+'%;'
-      + 'width:'+size.toFixed(1)+'px;height:'+size.toFixed(1)+'px;'
-      + '--c:var(--leaf-'+ci+');--op:'+op+';'
-      + '--sw:'+sway.toFixed(1)+'px;--rot:'+rot.toFixed(0)+'deg;'
-      + '--dur:'+dur.toFixed(2)+'s;--del:'+del.toFixed(2)+'s'
-      + '"><i></i></span>';
+    const fg=Math.random()<.14;                                  // крупный размытый лист «перед камерой»
+    const fromTree=!fg && emitters.length && Math.random()<.75;   // лист слетает с кроны
+    let kind,xPct,fromVh;
+    if(fromTree){
+      const e=pick(emitters);
+      kind=e.kind;
+      xPct=e.x+(Math.random()*2-1)*e.spread;
+      fromVh=Math.max(2,e.top-R(0,14));
+    }else{
+      kind=pick(KIND_KEYS);
+      xPct=Math.random()*100;
+      fromVh=-16;                                                // из-за верхней кромки
+    }
+    const sp=LEAF_KINDS[kind];
+    const size=(sp.size[0]+Math.random()*(sp.size[1]-sp.size[0]))*(fg?1.75:1);
+    const dist=Math.max(30,114-fromVh);
+    const dur=(9+Math.random()*8)*(dist/128);                    // скорость падения одинаковая
+    const del=-Math.random()*dur;                                // листопад уже идёт при загрузке
+    html+='<span class="leaf'+(fg?' fg':'')+(fromTree?' fade':'')+'" style="'
+      +'left:'+Math.max(-6,Math.min(106,xPct)).toFixed(2)+'%;'
+      +'width:'+size.toFixed(1)+'px;height:'+size.toFixed(1)+'px;'
+      +'--from:'+fromVh.toFixed(1)+'vh;--op:'+(0.6+Math.random()*0.4).toFixed(2)+';'
+      +'--sw:'+R(8,38).toFixed(1)+'px;--rot:'+R(180,720).toFixed(0)+'deg;'
+      +'--dur:'+dur.toFixed(2)+'s;--del:'+del.toFixed(2)+'s;--leaf-c:var('+pick(sp.tones)+')'
+      +'"><i><svg viewBox="0 0 100 100"><path d="'+sp.d+'"/><path class="v" d="'+sp.v+'"/></svg></i></span>';
   }
-  box.innerHTML = html;
+  box.innerHTML=html;
 }
+
+buildTrees();
 initLeaves();
 
 /* ---- Сообщаем родителю, что iframe готов ---- */
