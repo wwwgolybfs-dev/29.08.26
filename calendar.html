@@ -179,6 +179,27 @@ button{font-family:var(--font);color:inherit;touch-action:manipulation}
 .empty{padding:26px 16px;text-align:center;color:var(--muted);font-weight:600;font-size:14px}
 .empty .big{font-size:34px;display:block;margin-bottom:8px}
 
+/* баннер с контактом создателя (в самом низу экрана) */
+.cc-card{display:flex;align-items:center;gap:14px;margin-top:20px;padding:20px 16px 16px;border-radius:22px;text-decoration:none;color:inherit;cursor:pointer;transition:transform .15s,border-color .2s,background .2s}
+.cc-card:active{transform:scale(.98)}
+.cc-card:hover{border-color:var(--gold-border)}
+.cc-av{position:relative;width:54px;height:54px;flex:none;border-radius:50%;padding:2px;background:var(--gold-grad);box-shadow:0 4px 14px rgba(10,132,255,.25)}
+.cc-av img{display:block;width:100%;height:100%;border-radius:50%;object-fit:cover;background:var(--surface-2);position:relative;z-index:1}
+.cc-av-fb{position:absolute;inset:2px;border-radius:50%;display:none;place-items:center;font-weight:800;font-size:20px;color:#fff;background:var(--gold);z-index:1}
+.cc-txt{display:flex;flex-direction:column;gap:3px;min-width:0;flex:1}
+.cc-cap{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.cc-nick{font-size:16.5px;font-weight:800;color:var(--gold);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cc-go{flex:none;font-size:18px;color:var(--muted)}
+/* корона, «надетая» на аватарку */
+.cc-crown{position:absolute;left:50%;bottom:calc(100% - 6px);width:40px;height:auto;transform:translateX(-50%);z-index:0;pointer-events:none;overflow:visible;animation:ccGlow 3.4s ease-in-out infinite}
+@keyframes ccGlow{
+  0%,100%{filter:drop-shadow(0 2px 3px rgba(0,0,0,.42)) drop-shadow(0 0 4px rgba(255,196,69,.3))}
+  50%{filter:drop-shadow(0 2px 3px rgba(0,0,0,.42)) drop-shadow(0 0 9px rgba(255,196,69,.62))}
+}
+@media (prefers-reduced-motion:reduce){
+  .cc-crown{animation:none;filter:drop-shadow(0 2px 3px rgba(0,0,0,.42)) drop-shadow(0 0 5px rgba(255,196,69,.35))}
+}
+
 /* avatars */
 .av-wrap{display:inline-flex;flex-direction:column;align-items:center;flex:none;line-height:0}
 .av{position:relative;flex:none;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;box-shadow:inset 0 0 0 1px rgba(255,255,255,.25);overflow:hidden}
@@ -240,7 +261,7 @@ button{font-family:var(--font);color:inherit;touch-action:manipulation}
   .bd{backdrop-filter:none !important;-webkit-backdrop-filter:none !important;background:rgba(0,0,0,.5) !important}
   /* чтобы сцена была видна за карточками: без блюра, но полупрозрачно.
      Если контраст текста не нравится — просто удалите эту строку. */
-  .cal-card.glass,.up-row.glass,.empty.glass{background:var(--surface) !important}
+  .cal-card.glass,.up-row.glass,.empty.glass,.cc-card.glass{background:var(--surface) !important}
   /* на телефонах блюр дальних планов выключаем (как и backdrop-filter) */
   .trees.far,.trees.mid{filter:none !important}
   .trees.far{opacity:.42}
@@ -281,6 +302,51 @@ button{font-family:var(--font);color:inherit;touch-action:manipulation}
     <div class="chips" id="myDays"></div>
     <div class="block-head"><b>Ближайшие</b><button class="mini-link" id="calSoon">показать в календаре</button></div>
     <div class="up-list" id="upList"></div>
+
+    <!-- БАННЕР: контакт создателя (аватарка подтягивается из Telegram) -->
+    <a class="cc-card glass" id="ccCard" href="https://t.me/TOLIK_VDK" target="_blank" rel="noopener">
+      <span class="cc-av">
+        <img id="ccPic" src="https://t.me/i/userpic/320/6nOUfyZlfsKC-L1DkDbhJMNQvGA_N9tIim7uNguj0cE.svg" alt="TOLIK_VDK" referrerpolicy="no-referrer" decoding="async">
+        <span class="cc-av-fb" id="ccFb">T</span>
+        <!-- корона, надетая на аватарку -->
+        <svg class="cc-crown" viewBox="0 0 100 74" aria-hidden="true">
+          <defs>
+            <linearGradient id="ccGold" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#fff7d4"/>
+              <stop offset=".36" stop-color="#f7cd52"/>
+              <stop offset=".7" stop-color="#dda015"/>
+              <stop offset="1" stop-color="#a76d09"/>
+            </linearGradient>
+            <linearGradient id="ccJewel" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#ff9a9a"/>
+              <stop offset="1" stop-color="#c2273c"/>
+            </linearGradient>
+          </defs>
+          <!-- зубцы -->
+          <path d="M12 52 L16 20 L24.5 44 L33 32 L41.5 42 L50 8 L58.5 42 L67 32 L75.5 44 L84 20 L88 52 Z" fill="url(#ccGold)" stroke="#8a5a06" stroke-width="3" stroke-linejoin="round"/>
+          <!-- ободок -->
+          <path d="M9 51 Q9 46 15 46 L85 46 Q91 46 91 51 L91 66 Q91 71 85 71 L15 71 Q9 71 9 66 Z" fill="url(#ccGold)" stroke="#8a5a06" stroke-width="3" stroke-linejoin="round"/>
+          <!-- каменья -->
+          <circle cx="50" cy="58.5" r="4.6" fill="url(#ccJewel)"/>
+          <circle cx="26" cy="58.5" r="3.2" fill="url(#ccJewel)"/>
+          <circle cx="74" cy="58.5" r="3.2" fill="url(#ccJewel)"/>
+          <circle cx="50" cy="57" r="1.7" fill="#fff" opacity=".85"/>
+          <circle cx="26" cy="57.4" r="1.1" fill="#fff" opacity=".8"/>
+          <circle cx="74" cy="57.4" r="1.1" fill="#fff" opacity=".8"/>
+          <!-- жемчужины на зубцах -->
+          <circle cx="16" cy="18" r="3.8" fill="url(#ccGold)" stroke="#8a5a06" stroke-width="2.2"/>
+          <circle cx="84" cy="18" r="3.8" fill="url(#ccGold)" stroke="#8a5a06" stroke-width="2.2"/>
+          <circle cx="33" cy="30.5" r="3" fill="url(#ccGold)" stroke="#8a5a06" stroke-width="2"/>
+          <circle cx="67" cy="30.5" r="3" fill="url(#ccGold)" stroke="#8a5a06" stroke-width="2"/>
+          <circle cx="50" cy="5.6" r="4.6" fill="url(#ccGold)" stroke="#8a5a06" stroke-width="2.4"/>
+        </svg>
+      </span>
+      <span class="cc-txt">
+        <span class="cc-cap">Контакты тех поддержки</span>
+        <b class="cc-nick">🙂 @TOLIK_VDK</b>
+      </span>
+      <span class="cc-go">›</span>
+    </a>
   </section>
 </main>
 
@@ -731,6 +797,25 @@ function initLeaves(){
 
 buildTrees();
 initLeaves();
+
+/* ---- Баннер контакта: открываем Telegram-чат и страхуем аватарку ---- */
+(function initContact(){
+  const card=document.getElementById('ccCard'), pic=document.getElementById('ccPic'), fb=document.getElementById('ccFb');
+  function fallback(){ if(pic) pic.style.display='none'; if(fb) fb.style.display='grid'; }
+  if(pic){
+    pic.addEventListener('error',fallback);
+    // картинка могла не загрузиться ещё до навешивания обработчика
+    if(pic.complete && pic.naturalWidth===0) fallback();
+  }
+  if(card){
+    card.addEventListener('click',e=>{
+      if(tg && tg.openTelegramLink){
+        e.preventDefault();
+        try{ tg.openTelegramLink('https://t.me/TOLIK_VDK'); haptic('light'); }catch(err){}
+      }
+    });
+  }
+})();
 
 /* ---- Сообщаем родителю, что iframe готов ---- */
 sendToParent({ type:'petzker-cal-ready' });
